@@ -11,14 +11,14 @@ export function validateOptions(options: unknown): asserts options is Options
  */
 export interface Options {
   /**
-   * Whether to log the `error` stack trace.
+   * Whether to show the `error` stack trace.
    *
    * @default true
    */
   readonly stack?: boolean
 
   /**
-   * Whether to log the error's additional properties.
+   * Whether to show the error's additional properties.
    *
    * @default true
    */
@@ -55,25 +55,21 @@ export interface Options {
 }
 
 /**
- * Logs `error` on the console (`stderr`) then exits the process.
+ * Returns `error` as a prettified string.
  *
  * This never throws. Invalid `error`s are silently
  * [normalized](https://github.com/ehmicky/normalize-exception).
  *
  * @example
  * ```js
- * #!/usr/bin/env node
  * import beautifulError from 'beautiful-error'
  *
- * const cliMain = () => {
- *   try {
- *     // ...
- *   } catch (error) {
- *     beautifulError(error) // Logs `error` then exit the process
- *   }
+ * try {
+ *   // ...
+ * } catch (error) {
+ *   const message = beautifulError(error)
+ *   console.error(message)
  * }
- *
- * cliMain()
  * ```
  */
 export default function beautifulError(
