@@ -1,7 +1,7 @@
 import { excludeKeys } from 'filter-obj'
 
 // Apply default options
-export const applyDefaultOpts = (opts) => ({
+export const applyDefaultOpts = (opts = {}) => ({
   ...DEFAULT_OPTS,
   ...removeUndefined(opts),
 })
@@ -15,6 +15,6 @@ export const DEFAULT_OPTS = {
 }
 
 // Remove `undefined` values of an object
-export const removeUndefined = (object) => excludeKeys(object, isUndefined)
+const removeUndefined = (object) => excludeKeys(object, isUndefined)
 
 const isUndefined = (key, value) => value === undefined

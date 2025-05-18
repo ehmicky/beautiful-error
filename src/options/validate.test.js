@@ -16,9 +16,6 @@ each(
     { header: 'red-0' },
     { header: 'unknown' },
     { unknown: true },
-    { classes: true },
-    { classes: { default: true } },
-    { classes: { default: { classes: {} } } },
   ],
   ({ title }, options) => {
     test(`Handle invalid options | ${title}`, (t) => {
@@ -34,15 +31,11 @@ each(
 
 each(
   [
-    ...['stack', 'props', 'colors'].flatMap((optName) => [
-      { [optName]: undefined },
-      { classes: { default: { [optName]: undefined } } },
-    ]),
-    ...[undefined, {}].flatMap((value) => [
-      value,
-      { classes: value },
-      { classes: { default: value } },
-    ]),
+    undefined,
+    {},
+    { stack: undefined },
+    { props: undefined },
+    { colors: undefined },
   ],
   ({ title }, options) => {
     test(`Allow undefined options | ${title}`, (t) => {

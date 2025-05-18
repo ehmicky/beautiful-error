@@ -21,7 +21,7 @@ const prettyCliError = (error, opts) => {
   const {
     error: errorB,
     opts: { stack, props, colors, icon, header },
-  } = getOpts(opts, errorA)
+  } = getOpts(errorA, opts)
 
   const { addStyles, useColors } = getColors(colors)
   const errorString = serializeError({ error: errorB, stack, props, useColors })

@@ -3,7 +3,6 @@ import isPlainObj from 'is-plain-obj'
 import { validateHeader } from '../header.js'
 import { validateIcon } from '../icon.js'
 
-import { validateClasses } from './classes.js'
 import { handleInvalidOpts } from './invalid.js'
 
 // Validate option values.
@@ -52,5 +51,4 @@ const VALIDATORS = {
   colors: validateBooleanOpt,
   icon: validateIcon,
   header: validateHeader,
-  classes: validateClasses,
 }
