@@ -52,28 +52,6 @@ export interface Options {
    * @default 'red bold'
    */
   readonly header?: Styles | ''
-
-  /**
-   * Specify different options per error class. The object:
-   *  - Keys are either the
-   *    [`error.name`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/name),
-   *    or `"default"` (used if no `error.name` matches)
-   *  - Values are options objects
-   *
-   * @default {}
-   *
-   * @example
-   * ```js
-   * prettyCliError(error, {
-   *   InputError: { header: 'yellow', stack: false },
-   *   DatabaseError: { header: 'blue', stack: false },
-   *   default: { header: 'red' },
-   * })
-   * ```
-   */
-  readonly classes?: {
-    readonly [errorName: string]: Omit<Options, 'classes'>
-  }
 }
 
 /**

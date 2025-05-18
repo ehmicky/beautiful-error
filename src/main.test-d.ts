@@ -52,34 +52,6 @@ expectNotAssignable<Options>({ header: true })
 prettyCliError('', { header: 'unknown' })
 expectNotAssignable<Options>({ header: 'unknown' })
 
-prettyCliError('', { classes: {} })
-expectAssignable<Options>({ classes: {} })
-// @ts-expect-error
-prettyCliError('', { classes: true })
-expectNotAssignable<Options>({ classes: true })
-
-prettyCliError('', { classes: { Error: {} } })
-expectAssignable<Options>({ classes: { Error: {} } })
-prettyCliError('', { classes: { TypeError: {} } })
-expectAssignable<Options>({ classes: { TypeError: {} } })
-prettyCliError('', { classes: { default: {} } })
-expectAssignable<Options>({ classes: { default: {} } })
-prettyCliError('', { classes: { error: {} } })
-expectAssignable<Options>({ classes: { error: {} } })
-prettyCliError('', { classes: { other: {} } })
-expectAssignable<Options>({ classes: { other: {} } })
-
-prettyCliError('', { classes: { default: { icon: 'warning' } } })
-expectAssignable<Options>({ classes: { default: { icon: 'warning' } } })
-// @ts-expect-error
-prettyCliError('', { classes: { default: { classes: {} } } })
-expectNotAssignable<Options>({ classes: { default: { classes: {} } } })
-expectNotAssignable<Options>({ classes: { default: undefined } })
-expectNotAssignable<Options>({ classes: { Error: undefined } })
-// @ts-expect-error
-prettyCliError('', { classes: { default: { icon: true } } })
-expectNotAssignable<Options>({ classes: { default: { icon: true } } })
-
 expectType<void>(validateOptions({}))
 validateOptions(0)
 // @ts-expect-error
