@@ -11,15 +11,6 @@ export function validateOptions(options: unknown): asserts options is Options
  */
 export interface Options {
   /**
-   * Process [exit code](https://en.wikipedia.org/wiki/Exit_status).
-   *
-   * Note: when passing invalid `options`, the exit code is always `125`.
-   *
-   * @default 1
-   */
-  readonly exitCode?: number
-
-  /**
    * Whether to log the `error` stack trace.
    *
    * @default true
@@ -32,13 +23,6 @@ export interface Options {
    * @default true
    */
   readonly props?: boolean
-
-  /**
-   * Exits the process without logging anything on the console.
-   *
-   * @default false
-   */
-  readonly silent?: boolean
 
   /**
    * Whether to colorize the error's message, stack trace and additional properties.
@@ -70,19 +54,6 @@ export interface Options {
   readonly header?: Styles | ''
 
   /**
-   * The process exits gracefully: it waits for any ongoing tasks (callbacks,
-   * promises, etc.) to complete, up to a specific `timeout`.
-   *
-   * Special values:
-   *  - `0`: Exits right away, without waiting for ongoing tasks
-   *  - `Number.POSITIVE_INFINITY`: Waits for ongoing tasks forever, without
-   *    timing out
-   *
-   * @default 5000
-   */
-  readonly timeout?: number
-
-  /**
    * Specify different options per error class. The object:
    *  - Keys are either the
    *    [`error.name`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/name),
@@ -94,9 +65,9 @@ export interface Options {
    * @example
    * ```js
    * prettyCliError(error, {
-   *   InputError: { exitCode: 1, stack: false },
-   *   DatabaseError: { exitCode: 2, stack: false },
-   *   default: { exitCode: 3 },
+   *   InputError: { header: 'yellow', stack: false },
+   *   DatabaseError: { header: 'blue', stack: false },
+   *   default: { header: 'red' },
    * })
    * ```
    */
@@ -127,4 +98,4 @@ export interface Options {
  * cliMain()
  * ```
  */
-export default function prettyCliError(error: unknown, options?: Options): void
+export default function prettyCliError(error: unknown, options?: Options): string

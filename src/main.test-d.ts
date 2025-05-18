@@ -1,7 +1,7 @@
 import prettyCliError, { validateOptions, type Options } from 'pretty-cli-error'
 import { expectAssignable, expectNotAssignable, expectType } from 'tsd'
 
-expectType<void>(prettyCliError(new Error('test')))
+expectType<string>(prettyCliError(new Error('test')))
 prettyCliError('error')
 prettyCliError(undefined)
 
@@ -10,12 +10,6 @@ expectAssignable<Options>({})
 // @ts-expect-error
 prettyCliError('', true)
 expectNotAssignable<Options>(true)
-
-prettyCliError('', { exitCode: 0 })
-expectAssignable<Options>({ exitCode: 0 })
-// @ts-expect-error
-prettyCliError('', { exitCode: '0' })
-expectNotAssignable<Options>({ exitCode: '0' })
 
 prettyCliError('', { stack: true })
 expectAssignable<Options>({ stack: true })
@@ -28,12 +22,6 @@ expectAssignable<Options>({ props: true })
 // @ts-expect-error
 prettyCliError('', { props: 'true' })
 expectNotAssignable<Options>({ props: 'true' })
-
-prettyCliError('', { silent: true })
-expectAssignable<Options>({ silent: true })
-// @ts-expect-error
-prettyCliError('', { silent: 'true' })
-expectNotAssignable<Options>({ silent: 'true' })
 
 prettyCliError('', { colors: true })
 expectAssignable<Options>({ colors: true })
@@ -63,16 +51,6 @@ expectNotAssignable<Options>({ header: true })
 prettyCliError('', { header: 'unknown' })
 expectNotAssignable<Options>({ header: 'unknown' })
 
-prettyCliError('', { timeout: 0 })
-expectAssignable<Options>({ timeout: 0 })
-prettyCliError('', { timeout: 1e3 })
-expectAssignable<Options>({ timeout: 1e3 })
-prettyCliError('', { timeout: Number.POSITIVE_INFINITY })
-expectAssignable<Options>({ timeout: Number.POSITIVE_INFINITY })
-// @ts-expect-error
-prettyCliError('', { timeout: '0' })
-expectNotAssignable<Options>({ timeout: '0' })
-
 prettyCliError('', { classes: {} })
 expectAssignable<Options>({ classes: {} })
 // @ts-expect-error
@@ -90,16 +68,16 @@ expectAssignable<Options>({ classes: { error: {} } })
 prettyCliError('', { classes: { other: {} } })
 expectAssignable<Options>({ classes: { other: {} } })
 
-prettyCliError('', { classes: { default: { exitCode: 0 } } })
-expectAssignable<Options>({ classes: { default: { exitCode: 0 } } })
+prettyCliError('', { classes: { default: { icon: 'warning' } } })
+expectAssignable<Options>({ classes: { default: { icon: 'warning' } } })
 // @ts-expect-error
 prettyCliError('', { classes: { default: { classes: {} } } })
 expectNotAssignable<Options>({ classes: { default: { classes: {} } } })
 expectNotAssignable<Options>({ classes: { default: undefined } })
 expectNotAssignable<Options>({ classes: { Error: undefined } })
 // @ts-expect-error
-prettyCliError('', { classes: { default: { exitCode: '0' } } })
-expectNotAssignable<Options>({ classes: { default: { exitCode: '0' } } })
+prettyCliError('', { classes: { default: { icon: true } } })
+expectNotAssignable<Options>({ classes: { default: { icon: true } } })
 
 expectType<void>(validateOptions({}))
 validateOptions(0)
