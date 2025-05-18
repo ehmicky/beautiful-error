@@ -1,6 +1,6 @@
 {
   "name": "beautiful-error",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
   "exports": {
     "types": "./build/src/main.d.ts",
