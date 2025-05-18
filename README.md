@@ -25,7 +25,6 @@ Prettify error messages and stacks.
 # Example
 
 ```js
-#!/usr/bin/env node
 import beautifulError from 'beautiful-error'
 
 try {
