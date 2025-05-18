@@ -1,7 +1,8 @@
 import test from 'ava'
 import { serialize } from 'error-serializer'
-import prettyCliError from 'pretty-cli-error'
 import { each } from 'test-each'
+
+import prettyCliError from 'pretty-cli-error'
 
 const createDeepErrors = () => Array.from({ length: 5 }, createDeepError)
 

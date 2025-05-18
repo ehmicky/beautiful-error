@@ -1,5 +1,6 @@
-import prettyCliError, { validateOptions, type Options } from 'pretty-cli-error'
 import { expectAssignable, expectNotAssignable, expectType } from 'tsd'
+
+import prettyCliError, { validateOptions, type Options } from 'pretty-cli-error'
 
 expectType<string>(prettyCliError(new Error('test')))
 prettyCliError('error')

@@ -1,6 +1,7 @@
 import test from 'ava'
-import prettyCliError, { validateOptions } from 'pretty-cli-error'
 import { each } from 'test-each'
+
+import prettyCliError, { validateOptions } from 'pretty-cli-error'
 
 const INVALID_USAGE = 'pretty-cli-error invalid usage'
 
@@ -33,12 +34,10 @@ each(
 
 each(
   [
-    ...['stack', 'props', 'colors'].flatMap(
-      (optName) => [
-        { [optName]: undefined },
-        { classes: { default: { [optName]: undefined } } },
-      ],
-    ),
+    ...['stack', 'props', 'colors'].flatMap((optName) => [
+      { [optName]: undefined },
+      { classes: { default: { [optName]: undefined } } },
+    ]),
     ...[undefined, {}].flatMap((value) => [
       value,
       { classes: value },

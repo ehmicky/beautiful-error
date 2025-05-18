@@ -1,8 +1,9 @@
 import { inspect } from 'node:util'
+
 import normalizeException from 'normalize-exception'
 
-import { getOpts } from './options/main.js'
 import { getColors } from './colors.js'
+import { getOpts } from './options/main.js'
 import { prettifyError } from './pretty.js'
 import { omitProps } from './props.js'
 import {

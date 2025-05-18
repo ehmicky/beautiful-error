@@ -1,6 +1,7 @@
 import test from 'ava'
-import prettyCliError from 'pretty-cli-error'
 import { each } from 'test-each'
+
+import prettyCliError from 'pretty-cli-error'
 
 const propsError = new TypeError('test')
 // eslint-disable-next-line fp/no-mutation

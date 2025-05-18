@@ -1,8 +1,9 @@
 import test from 'ava'
 import chalkString from 'chalk-string'
 import figures from 'figures'
-import prettyCliError from 'pretty-cli-error'
 import { each } from 'test-each'
+
+import prettyCliError from 'pretty-cli-error'
 
 const addStyles = chalkString({ colors: true })
 const testOpts = { icon: '', colors: true }
@@ -24,15 +25,12 @@ each(
 )
 
 each([{ colors: false }, { header: '' }], ({ title }, opts) => {
-  test(
-    `"header" is not applied if empty or no colors | ${title}`,
-    (t) => {
-      const error = new Error('test')
-      const message = prettyCliError(error, { ...testOpts, ...opts })
-      t.true(message.includes(`${error.name}: `))
-      t.pass()
-    },
-  )
+  test(`"header" is not applied if empty or no colors | ${title}`, (t) => {
+    const error = new Error('test')
+    const message = prettyCliError(error, { ...testOpts, ...opts })
+    t.true(message.includes(`${error.name}: `))
+    t.pass()
+  })
 })
 
 test('"header" is not added to preview lines', (t) => {

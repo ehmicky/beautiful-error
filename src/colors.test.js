@@ -1,8 +1,9 @@
 import test from 'ava'
 import chalkString from 'chalk-string'
 import hasAnsi from 'has-ansi'
-import prettyCliError from 'pretty-cli-error'
 import { each } from 'test-each'
+
+import prettyCliError from 'pretty-cli-error'
 
 const testError = new TypeError('test')
 const addStyles = chalkString({ colors: true })

@@ -1,6 +1,7 @@
 import test from 'ava'
-import prettyCliError, { validateOptions } from 'pretty-cli-error'
 import { each } from 'test-each'
+
+import prettyCliError, { validateOptions } from 'pretty-cli-error'
 
 each(
   [

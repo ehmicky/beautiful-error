@@ -1,7 +1,8 @@
 import test from 'ava'
 import figures from 'figures'
-import prettyCliError from 'pretty-cli-error'
 import { each } from 'test-each'
+
+import prettyCliError from 'pretty-cli-error'
 
 each(
   [

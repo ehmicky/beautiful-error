@@ -98,4 +98,7 @@ export interface Options {
  * cliMain()
  * ```
  */
-export default function prettyCliError(error: unknown, options?: Options): string
+export default function prettyCliError(
+  error: unknown,
+  options?: Options,
+): string
