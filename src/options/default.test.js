@@ -1,21 +1,20 @@
 import test from 'ava'
+import figures from 'figures'
+import prettyCliError from 'pretty-cli-error'
 import { each } from 'test-each'
-
-import { DEFAULT_EXIT_CODE } from '../exit.js'
-import { handleError } from '../helpers/main.test.js'
 
 each(
   [
-    { options: { exitCode: undefined }, expectedCode: DEFAULT_EXIT_CODE },
+    { options: { icon: undefined }, expectedIcon: 'cross' },
     {
-      options: { exitCode: 2, classes: { default: { exitCode: undefined } } },
-      expectedCode: 2,
+      options: { icon: 'warning', classes: { default: { icon: undefined } } },
+      expectedIcon: 'warning',
     },
   ],
-  ({ title }, { options, expectedCode }) => {
-    test.serial(`Undefined options are ignored | ${title}`, (t) => {
-      const { exitCode } = handleError('', options)
-      t.is(exitCode, expectedCode)
+  ({ title }, { options, expectedIcon }) => {
+    test(`Undefined options are ignored | ${title}`, (t) => {
+      const message = prettyCliError('', options)
+      t.true(message.includes(figures[expectedIcon]))
     })
   },
 )

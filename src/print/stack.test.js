@@ -1,8 +1,7 @@
 import test from 'ava'
 import { serialize } from 'error-serializer'
+import prettyCliError from 'pretty-cli-error'
 import { each } from 'test-each'
-
-import { handleError } from '../helpers/main.test.js'
 
 const createDeepErrors = () => Array.from({ length: 5 }, createDeepError)
 
@@ -46,42 +45,42 @@ each(
   [true, false, undefined],
   // eslint-disable-next-line max-params
   ({ title }, error, stack, props) => {
-    test.serial(`Prints stack unless "stack" is false | ${title}`, (t) => {
-      const { consoleArg } = handleError(error, { stack, props })
+    test(`Prints stack unless "stack" is false | ${title}`, (t) => {
+      const message = prettyCliError(error, { stack, props })
       t.is(
-        consoleArg.includes('at '),
+        message.includes('at '),
         stack !== false && error.stack.includes('at '),
       )
     })
 
-    test.serial(`Does not put the error in brackets | ${title}`, (t) => {
-      const { consoleArg } = handleError(error, { stack, props, icon: '' })
-      t.false(consoleArg.startsWith('['))
+    test(`Does not put the error in brackets | ${title}`, (t) => {
+      const message = prettyCliError(error, { stack, props, icon: '' })
+      t.false(message.startsWith('['))
     })
 
-    test.serial(`Does not modify the error | ${title}`, (t) => {
+    test(`Does not modify the error | ${title}`, (t) => {
       const errorCopy = serialize(error)
-      handleError(error, { stack, props })
+      prettyCliError(error, { stack, props })
       t.deepEqual(serialize(error), errorCopy)
     })
 
-    test.serial(`Prints error name and message | ${title}`, (t) => {
-      const { consoleArg } = handleError(error, { stack, props })
-      t.true(consoleArg.includes(`${error.name}: ${error.message}`))
+    test(`Prints error name and message | ${title}`, (t) => {
+      const message = prettyCliError(error, { stack, props })
+      t.true(message.includes(`${error.name}: ${error.message}`))
     })
   },
 )
 
 each([true, false], ({ title }, stack, props) => {
-  test.serial(`Prints error name consistently | ${title}`, (t) => {
-    const { consoleArg } = handleError(ownNameError, { stack: false, props })
-    t.true(consoleArg.includes(`Error [${ownNameError.name}`))
+  test(`Prints error name consistently | ${title}`, (t) => {
+    const message = prettyCliError(ownNameError, { stack: false, props })
+    t.true(message.includes(`Error [${ownNameError.name}`))
   })
 })
 
-test.serial('Does not remove stacks from non-errors', (t) => {
+test('Does not remove stacks from non-errors', (t) => {
   const error = new Error('test')
   error.prop = { stack: 'propStack' }
-  const { consoleArg } = handleError(error, { stack: false, props: true })
-  t.true(consoleArg.includes(error.prop.stack))
+  const message = prettyCliError(error, { stack: false, props: true })
+  t.true(message.includes(error.prop.stack))
 })

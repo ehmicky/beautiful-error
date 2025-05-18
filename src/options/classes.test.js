@@ -1,22 +1,22 @@
 import test from 'ava'
+import figures from 'figures'
+import prettyCliError from 'pretty-cli-error'
 import { each } from 'test-each'
-
-import { handleError } from '../helpers/main.test.js'
 
 each(
   [
-    { classes: { TypeError: { exitCode: 2 } } },
-    { exitCode: 2, classes: { Error: { exitCode: 1 } } },
-    { classes: { Error: { exitCode: 1 }, default: { exitCode: 2 } } },
-    { classes: { TypeError: { exitCode: 2 }, default: { exitCode: 1 } } },
-    { exitCode: 1, classes: { default: { exitCode: 2 } } },
-    { exitCode: 2, classes: { typeerror: { exitCode: 1 } } },
+    { classes: { TypeError: { icon: 'warning' } } },
+    { icon: 'warning', classes: { Error: { icon: 'info' } } },
+    { classes: { Error: { icon: 'info' }, default: { icon: 'warning' } } },
+    { classes: { TypeError: { icon: 'warning' }, default: { icon: 'info' } } },
+    { icon: 'info', classes: { default: { icon: 'warning' } } },
+    { icon: 'warning', classes: { typeerror: { icon: 'info' } } },
   ],
   ({ title }, options) => {
-    test.serial(`Apply option "classes" | ${title}`, (t) => {
+    test(`Apply option "classes" | ${title}`, (t) => {
       const typeError = new TypeError('test')
-      const { exitCode } = handleError(typeError, options)
-      t.is(exitCode, 2)
+      const message = prettyCliError(typeError, options)
+      t.true(message.includes(figures.warning))
     })
   },
 )

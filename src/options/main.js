@@ -10,11 +10,13 @@ export const getOpts = (opts, error) => {
     return safeGetOpts(opts, error)
   } catch (error_) {
     // eslint-disable-next-line fp/no-mutation
-    error_.message = `pretty-cli-error invalid usage: ${error_.message}`
+    error_.message = `${PACKAGE_NAME} invalid usage: ${error_.message}`
     const errorA = normalizeException(error_)
     return { error: errorA, opts: INVALID_OPTS }
   }
 }
+
+const PACKAGE_NAME = 'pretty-cli-error'
 
 const safeGetOpts = (opts, error) => {
   validateOptions(opts)

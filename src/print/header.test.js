@@ -1,9 +1,8 @@
 import test from 'ava'
 import chalkString from 'chalk-string'
 import figures from 'figures'
+import prettyCliError from 'pretty-cli-error'
 import { each } from 'test-each'
-
-import { handleError } from '../helpers/main.test.js'
 
 const addStyles = chalkString({ colors: true })
 const testOpts = { icon: '', colors: true }
@@ -15,51 +14,51 @@ each(
     { header: 'red bold', styles: 'red bold' },
   ],
   ({ title }, { header, styles }) => {
-    test.serial(`"header" is applied | ${title}`, (t) => {
+    test(`"header" is applied | ${title}`, (t) => {
       const error = new Error('test')
-      const { consoleArg } = handleError(error, { ...testOpts, header })
-      t.true(consoleArg.includes(addStyles(styles, `${error.name}:`)))
+      const message = prettyCliError(error, { ...testOpts, header })
+      t.true(message.includes(addStyles(styles, `${error.name}:`)))
       t.pass()
     })
   },
 )
 
 each([{ colors: false }, { header: '' }], ({ title }, opts) => {
-  test.serial(
+  test(
     `"header" is not applied if empty or no colors | ${title}`,
     (t) => {
       const error = new Error('test')
-      const { consoleArg } = handleError(error, { ...testOpts, ...opts })
-      t.true(consoleArg.includes(`${error.name}: `))
+      const message = prettyCliError(error, { ...testOpts, ...opts })
+      t.true(message.includes(`${error.name}: `))
       t.pass()
     },
   )
 })
 
-test.serial('"header" is not added to preview lines', (t) => {
+test('"header" is not added to preview lines', (t) => {
   const error = new Error('test')
   const preview = 'preview'
   error.stack = `${preview}\n${error.stack}`
-  const { consoleArg } = handleError(error, testOpts)
-  t.true(consoleArg.startsWith(preview))
+  const message = prettyCliError(error, testOpts)
+  t.true(message.startsWith(preview))
 })
 
-test.serial('"header" works with empty messages', (t) => {
+test('"header" works with empty messages', (t) => {
   const error = new Error('')
   const header = 'green'
-  const { consoleArg } = handleError(error, { ...testOpts, header })
-  t.true(consoleArg.includes(addStyles(header, error.name)))
+  const message = prettyCliError(error, { ...testOpts, header })
+  t.true(message.includes(addStyles(header, error.name)))
 })
 
-test.serial('"header" colorizes the icon', (t) => {
+test('"header" colorizes the icon', (t) => {
   const error = new Error('test')
   const header = 'green'
-  const { consoleArg } = handleError(error, {
+  const message = prettyCliError(error, {
     ...testOpts,
     icon: 'warning',
     header,
   })
   t.true(
-    consoleArg.includes(addStyles(header, `${figures.warning} ${error.name}:`)),
+    message.includes(addStyles(header, `${figures.warning} ${error.name}:`)),
   )
 })
