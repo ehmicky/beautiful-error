@@ -14,11 +14,8 @@ Error handler for CLI applications.
 # Features
 
 - 🖍️ Pretty [colors](#%EF%B8%8F-colors), [icons](#-icon) and [header](#-header)
-- 💣 [Error class-specific](#-classes) handling
-- 🚒 [Graceful exit](#-timeout)
 - ⛑️ [Normalize](https://github.com/ehmicky/normalize-exception) invalid errors
-- 🔕 Log verbosity: [message](#-silent), [stack](#-stack), [properties](#-props)
-- 🚨 Custom [exit code](#-exitcode)
+- 🔕 Log verbosity: [stack](#-stack), [properties](#-props)
 - 💥 Exception-safe
 
 # Screenshot
@@ -26,8 +23,6 @@ Error handler for CLI applications.
 <img alt="beautiful-error screenshot" src="docs/screenshot.png" width="500"/>
 
 # Example
-
-## General
 
 ```js
 #!/usr/bin/env node
@@ -42,18 +37,6 @@ const cliMain = () => {
 }
 
 cliMain()
-```
-
-## Error class-specific
-
-```js
-beautifulError(error, {
-  classes: {
-    InputError: { exitCode: 1, stack: false },
-    DatabaseError: { exitCode: 2, stack: false },
-    default: { exitCode: 3 },
-  },
-})
 ```
 
 # Install
@@ -76,7 +59,7 @@ not CommonJS.
 
 `error` `any`\
 `options` [`Options?`](#options)\
-_Return value_: `undefined`
+_Return value_: `string`
 
 Logs `error` on the console (`stderr`) then exits the process.
 
@@ -84,15 +67,6 @@ This never throws. Invalid errors are silently
 [normalized](https://github.com/ehmicky/normalize-exception).
 
 ### Options
-
-#### 🚨 exitCode
-
-_Type_: `integer`\
-_Default_: `1`
-
-Process [exit code](https://en.wikipedia.org/wiki/Exit_status).
-
-Note: when passing invalid [`options`](#options), the exit code is always `125`.
 
 #### 📕 stack
 
@@ -107,13 +81,6 @@ _Type_: `boolean`\
 _Default_: `true`
 
 Whether to log the error's additional properties.
-
-#### 🔕 silent
-
-_Type_: `boolean`\
-_Default_: `false`
-
-Exits the process without logging anything on the console.
 
 #### 🖍️ colors
 
@@ -143,32 +110,6 @@ Color/style of the error's [icon](#-icon) and name. The available values are
 listed [here](https://github.com/ehmicky/chalk-string#available-styles). Several
 styles can be specified by using spaces. Can be disabled by passing an empty
 string.
-
-#### 🚒 timeout
-
-_Type_: `integer` (in milliseconds)\
-_Default_: `5000` (5 seconds)
-
-The process exits gracefully: it waits for any ongoing tasks (callbacks,
-promises, etc.) to complete, up to a specific `timeout`.
-
-Special values:
-
-- `0`: Exits right away, without waiting for ongoing tasks
-- `Number.POSITIVE_INFINITY`: Waits for ongoing tasks forever, without timing
-  out
-
-#### 💣 classes
-
-_Type_: `object`\
-_Default_: `{}`
-
-Specify [different options per error class](#error-class-specific). The object:
-
-- Keys are either the
-  [`error.name`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/name),
-  or `"default"` (used if no `error.name` matches)
-- Values are [options](#options) objects
 
 # Related projects
 
