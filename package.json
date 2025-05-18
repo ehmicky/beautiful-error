@@ -1,5 +1,5 @@
 {
-  "name": "pretty-cli-error",
+  "name": "beautiful-error",
   "version": "0.0.1",
   "type": "module",
   "exports": {
@@ -41,13 +41,13 @@
     "exitcode"
   ],
   "license": "MIT",
-  "homepage": "https://www.github.com/ehmicky/pretty-cli-error",
+  "homepage": "https://www.github.com/ehmicky/beautiful-error",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ehmicky/pretty-cli-error.git"
+    "url": "git+https://github.com/ehmicky/beautiful-error.git"
   },
   "bugs": {
-    "url": "https://github.com/ehmicky/pretty-cli-error/issues"
+    "url": "https://github.com/ehmicky/beautiful-error/issues"
   },
   "author": "ehmicky <ehmicky@gmail.com> (https://github.com/ehmicky)",
   "directories": {

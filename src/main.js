@@ -16,7 +16,7 @@ import {
 export { validateOptions } from './options/validate.js'
 
 // Print CLI errors and exit, depending on the error class
-const prettyCliError = (error, opts) => {
+const beautifulError = (error, opts) => {
   const errorA = normalizeException(error)
   const {
     error: errorB,
@@ -48,4 +48,4 @@ const serializeError = ({ error, stack, props, useColors }) => {
   return omitStackBracket(errorString)
 }
 
-export default prettyCliError
+export default beautifulError

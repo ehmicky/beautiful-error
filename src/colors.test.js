@@ -3,20 +3,20 @@ import chalkString from 'chalk-string'
 import hasAnsi from 'has-ansi'
 import { each } from 'test-each'
 
-import prettyCliError from 'pretty-cli-error'
+import beautifulError from 'beautiful-error'
 
 const testError = new TypeError('test')
 const addStyles = chalkString({ colors: true })
 
 each([true, false], ({ title }, colors) => {
   test(`Add colors unless "colors" is false | ${title}`, (t) => {
-    const message = prettyCliError(testError, { colors })
+    const message = beautifulError(testError, { colors })
     t.is(hasAnsi(message), colors !== false)
   })
 })
 
 test('"colors" defaults to TTY color support', (t) => {
-  const message = prettyCliError(testError)
+  const message = beautifulError(testError)
   t.false(hasAnsi(message))
 })
 
@@ -33,7 +33,7 @@ each(
       const error = new Error(
         `a ${quote}b${newline}${quote} c ${quote}d${quote}`,
       )
-      const message = prettyCliError(error, { colors: true })
+      const message = beautifulError(error, { colors: true })
       t.not(
         message.includes(
           `a ${quote}${addStyles(

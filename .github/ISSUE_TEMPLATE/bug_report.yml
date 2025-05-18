@@ -47,7 +47,7 @@ body:
       description: |
         Enter the following command in a terminal and copy/paste its output:
         ```bash
-        npx envinfo --system --binaries --browsers --npmPackages pretty-cli-error
+        npx envinfo --system --binaries --browsers --npmPackages beautiful-error
         ```
     validations:
       required: true

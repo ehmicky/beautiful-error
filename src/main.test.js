@@ -1,7 +1,7 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import prettyCliError, { validateOptions } from 'pretty-cli-error'
+import beautifulError, { validateOptions } from 'beautiful-error'
 
 each(
   [
@@ -12,7 +12,7 @@ each(
   ],
   ({ title }, { error, expectedMessage }) => {
     test(`Normalize error | ${title}`, (t) => {
-      const message = prettyCliError(error)
+      const message = beautifulError(error)
       t.true(message.includes(expectedMessage))
     })
   },

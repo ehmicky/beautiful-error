@@ -1,9 +1,9 @@
 import test from 'ava'
 import { each } from 'test-each'
 
-import prettyCliError, { validateOptions } from 'pretty-cli-error'
+import beautifulError, { validateOptions } from 'beautiful-error'
 
-const INVALID_USAGE = 'pretty-cli-error invalid usage'
+const INVALID_USAGE = 'beautiful-error invalid usage'
 
 each(
   [
@@ -19,7 +19,7 @@ each(
   ],
   ({ title }, options) => {
     test(`Handle invalid options | ${title}`, (t) => {
-      const message = prettyCliError('', options)
+      const message = beautifulError('', options)
       t.true(message.includes(INVALID_USAGE))
     })
 
@@ -41,7 +41,7 @@ each(
     test(`Allow undefined options | ${title}`, (t) => {
       t.notThrows(validateOptions.bind(undefined, options))
 
-      const message = prettyCliError('', options)
+      const message = beautifulError('', options)
       t.false(message.includes(INVALID_USAGE))
     })
   },

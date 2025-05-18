@@ -2,7 +2,7 @@ import test from 'ava'
 import { serialize } from 'error-serializer'
 import { each } from 'test-each'
 
-import prettyCliError from 'pretty-cli-error'
+import beautifulError from 'beautiful-error'
 
 const createDeepErrors = () => Array.from({ length: 5 }, createDeepError)
 
@@ -47,7 +47,7 @@ each(
   // eslint-disable-next-line max-params
   ({ title }, error, stack, props) => {
     test(`Prints stack unless "stack" is false | ${title}`, (t) => {
-      const message = prettyCliError(error, { stack, props })
+      const message = beautifulError(error, { stack, props })
       t.is(
         message.includes('at '),
         stack !== false && error.stack.includes('at '),
@@ -55,18 +55,18 @@ each(
     })
 
     test(`Does not put the error in brackets | ${title}`, (t) => {
-      const message = prettyCliError(error, { stack, props, icon: '' })
+      const message = beautifulError(error, { stack, props, icon: '' })
       t.false(message.startsWith('['))
     })
 
     test(`Does not modify the error | ${title}`, (t) => {
       const errorCopy = serialize(error)
-      prettyCliError(error, { stack, props })
+      beautifulError(error, { stack, props })
       t.deepEqual(serialize(error), errorCopy)
     })
 
     test(`Prints error name and message | ${title}`, (t) => {
-      const message = prettyCliError(error, { stack, props })
+      const message = beautifulError(error, { stack, props })
       t.true(message.includes(`${error.name}: ${error.message}`))
     })
   },
@@ -74,7 +74,7 @@ each(
 
 each([true, false], ({ title }, stack, props) => {
   test(`Prints error name consistently | ${title}`, (t) => {
-    const message = prettyCliError(ownNameError, { stack: false, props })
+    const message = beautifulError(ownNameError, { stack: false, props })
     t.true(message.includes(`Error [${ownNameError.name}`))
   })
 })
@@ -82,6 +82,6 @@ each([true, false], ({ title }, stack, props) => {
 test('Does not remove stacks from non-errors', (t) => {
   const error = new Error('test')
   error.prop = { stack: 'propStack' }
-  const message = prettyCliError(error, { stack: false, props: true })
+  const message = beautifulError(error, { stack: false, props: true })
   t.true(message.includes(error.prop.stack))
 })

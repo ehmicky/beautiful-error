@@ -1,55 +1,55 @@
 import { expectAssignable, expectNotAssignable, expectType } from 'tsd'
 
-import prettyCliError, { validateOptions, type Options } from 'pretty-cli-error'
+import beautifulError, { validateOptions, type Options } from 'beautiful-error'
 
-expectType<string>(prettyCliError(new Error('test')))
-prettyCliError('error')
-prettyCliError(undefined)
+expectType<string>(beautifulError(new Error('test')))
+beautifulError('error')
+beautifulError(undefined)
 
-prettyCliError('', {})
+beautifulError('', {})
 expectAssignable<Options>({})
 // @ts-expect-error
-prettyCliError('', true)
+beautifulError('', true)
 expectNotAssignable<Options>(true)
 
-prettyCliError('', { stack: true })
+beautifulError('', { stack: true })
 expectAssignable<Options>({ stack: true })
 // @ts-expect-error
-prettyCliError('', { stack: 'true' })
+beautifulError('', { stack: 'true' })
 expectNotAssignable<Options>({ stack: 'true' })
 
-prettyCliError('', { props: true })
+beautifulError('', { props: true })
 expectAssignable<Options>({ props: true })
 // @ts-expect-error
-prettyCliError('', { props: 'true' })
+beautifulError('', { props: 'true' })
 expectNotAssignable<Options>({ props: 'true' })
 
-prettyCliError('', { colors: true })
+beautifulError('', { colors: true })
 expectAssignable<Options>({ colors: true })
 // @ts-expect-error
-prettyCliError('', { colors: 'true' })
+beautifulError('', { colors: 'true' })
 expectNotAssignable<Options>({ colors: 'true' })
 
-prettyCliError('', { icon: '' })
+beautifulError('', { icon: '' })
 expectAssignable<Options>({ icon: '' })
-prettyCliError('', { icon: 'warning' })
+beautifulError('', { icon: 'warning' })
 expectAssignable<Options>({ icon: 'warning' })
 // @ts-expect-error
-prettyCliError('', { icon: 'warn' })
+beautifulError('', { icon: 'warn' })
 expectNotAssignable<Options>({ icon: 'warn' })
 // @ts-expect-error
-prettyCliError('', { icon: true })
+beautifulError('', { icon: true })
 expectNotAssignable<Options>({ icon: true })
 
-prettyCliError('', { header: '' })
+beautifulError('', { header: '' })
 expectAssignable<Options>({ header: '' })
-prettyCliError('', { header: 'red bold' })
+beautifulError('', { header: 'red bold' })
 expectAssignable<Options>({ header: 'red bold' })
 // @ts-expect-error
-prettyCliError('', { header: true })
+beautifulError('', { header: true })
 expectNotAssignable<Options>({ header: true })
 // @ts-expect-error
-prettyCliError('', { header: 'unknown' })
+beautifulError('', { header: 'unknown' })
 expectNotAssignable<Options>({ header: 'unknown' })
 
 expectType<void>(validateOptions({}))

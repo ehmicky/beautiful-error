@@ -17,7 +17,7 @@ export const getOpts = (error, opts) => {
   }
 }
 
-const PACKAGE_NAME = 'pretty-cli-error'
+const PACKAGE_NAME = 'beautiful-error'
 
 // Options used when invalid input is passed
 const INVALID_OPTS = { ...DEFAULT_OPTS }

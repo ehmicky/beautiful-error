@@ -2,12 +2,12 @@ import type { Styles } from 'chalk-string'
 import type figures from 'figures'
 
 /**
- * Validate `pretty-cli-error` options
+ * Validate `beautiful-error` options
  */
 export function validateOptions(options: unknown): asserts options is Options
 
 /**
- * `pretty-cli-error` options
+ * `beautiful-error` options
  */
 export interface Options {
   /**
@@ -63,20 +63,20 @@ export interface Options {
  * @example
  * ```js
  * #!/usr/bin/env node
- * import prettyCliError from 'pretty-cli-error'
+ * import beautifulError from 'beautiful-error'
  *
  * const cliMain = () => {
  *   try {
  *     // ...
  *   } catch (error) {
- *     prettyCliError(error) // Logs `error` then exit the process
+ *     beautifulError(error) // Logs `error` then exit the process
  *   }
  * }
  *
  * cliMain()
  * ```
  */
-export default function prettyCliError(
+export default function beautifulError(
   error: unknown,
   options?: Options,
 ): string

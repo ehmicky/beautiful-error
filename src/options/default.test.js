@@ -1,9 +1,9 @@
 import test from 'ava'
 import figures from 'figures'
 
-import prettyCliError from 'pretty-cli-error'
+import beautifulError from 'beautiful-error'
 
 test('Undefined options are ignored', (t) => {
-  const message = prettyCliError('', { icon: undefined })
+  const message = beautifulError('', { icon: undefined })
   t.true(message.includes(figures.cross))
 })
