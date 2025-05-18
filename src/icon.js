@@ -1,6 +1,6 @@
 import figures from 'figures'
 
-import { handleInvalidOpts } from '../options/invalid.js'
+import { handleInvalidOpts } from './options/invalid.js'
 
 // Validate `icon` option
 export const validateIcon = (value, optName) => {

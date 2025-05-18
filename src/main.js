@@ -2,15 +2,15 @@ import { inspect } from 'node:util'
 import normalizeException from 'normalize-exception'
 
 import { getOpts } from './options/main.js'
-import { getColors } from './print/colors.js'
-import { prettifyError } from './print/pretty.js'
-import { omitProps } from './print/props.js'
+import { getColors } from './colors.js'
+import { prettifyError } from './pretty.js'
+import { omitProps } from './props.js'
 import {
   omitStack,
   omitStackBracket,
   PRINT_MAX_DEPTH,
   restoreStack,
-} from './print/stack.js'
+} from './stack.js'
 
 export { validateOptions } from './options/validate.js'
 

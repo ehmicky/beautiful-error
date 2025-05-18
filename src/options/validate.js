@@ -1,7 +1,7 @@
 import isPlainObj from 'is-plain-obj'
 
-import { validateHeader } from '../print/header.js'
-import { validateIcon } from '../print/icon.js'
+import { validateHeader } from '../header.js'
+import { validateIcon } from '../icon.js'
 
 import { validateClasses } from './classes.js'
 import { handleInvalidOpts } from './invalid.js'

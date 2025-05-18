@@ -1,6 +1,6 @@
 import chalkString from 'chalk-string'
 
-import { handleInvalidOpts } from '../options/invalid.js'
+import { handleInvalidOpts } from './options/invalid.js'
 
 const globalAddStyles = chalkString({ colors: true })
 
