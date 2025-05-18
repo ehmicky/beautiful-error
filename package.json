@@ -17,28 +17,28 @@
   "scripts": {
     "test": "gulp test"
   },
-  "description": "Pretty errors for CLI applications.",
+  "description": "💣 Pretty errors for CLI applications 💥",
   "keywords": [
+    "nodejs",
+    "javascript",
+    "shell",
     "bash",
     "cli",
     "console",
-    "error",
-    "error-handling",
-    "error-monitoring",
-    "errors",
-    "exit",
-    "exitcode",
-    "handler",
-    "javascript",
     "library",
-    "message",
-    "monitoring",
-    "nodejs",
-    "shell",
-    "stack",
+    "typescript",
     "terminal",
+    "errors",
+    "monitoring",
+    "error-monitoring",
+    "stack",
+    "handler",
+    "message",
     "timeout",
-    "typescript"
+    "error-handling",
+    "error",
+    "exit",
+    "exitcode"
   ],
   "license": "MIT",
   "homepage": "https://www.github.com/ehmicky/pretty-cli-error",
@@ -53,10 +53,24 @@
   "directories": {
     "lib": "src"
   },
+  "dependencies": {
+    "chalk-string": "^3.0.1",
+    "figures": "^6.0.1",
+    "filter-obj": "^6.1.0",
+    "is-error-instance": "^3.0.1",
+    "is-plain-obj": "^4.1.0",
+    "normalize-exception": "^4.0.1"
+  },
   "devDependencies": {
     "@ehmicky/dev-tasks": "^3.0.33",
     "@ehmicky/eslint-config": "^20.0.31",
-    "@ehmicky/prettier-config": "^1.0.6"
+    "@ehmicky/prettier-config": "^1.0.6",
+    "@sinonjs/fake-timers": "^14.0.0",
+    "error-serializer": "^8.0.1",
+    "has-ansi": "^6.0.0",
+    "nano-spawn": "^0.2.1",
+    "sinon": "^20.0.0",
+    "test-each": "^7.0.1"
   },
   "engines": {
     "node": ">=18.18.0"
