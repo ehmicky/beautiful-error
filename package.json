@@ -17,7 +17,7 @@
   "scripts": {
     "test": "gulp test"
   },
-  "description": "💣 Pretty errors for CLI applications 💥",
+  "description": "💣 Prettify error messages and stacks 💥",
   "keywords": [
     "nodejs",
     "javascript",

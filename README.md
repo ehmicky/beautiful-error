@@ -9,7 +9,7 @@
 [![Mastodon](https://img.shields.io/badge/-Mastodon-808080.svg?logo=mastodon&colorA=404040&logoColor=9590F9)](https://fosstodon.org/@ehmicky)
 [![Medium](https://img.shields.io/badge/-Medium-808080.svg?logo=medium&colorA=404040)](https://medium.com/@ehmicky)
 
-Error handler for CLI applications.
+Prettify error messages and stacks.
 
 # Features
 
@@ -28,15 +28,12 @@ Error handler for CLI applications.
 #!/usr/bin/env node
 import beautifulError from 'beautiful-error'
 
-const cliMain = () => {
-  try {
-    // ...
-  } catch (error) {
-    beautifulError(error) // Logs `error` then exit the process
-  }
+try {
+  // ...
+} catch (error) {
+  const message = beautifulError(error)
+  console.error(message)
 }
-
-cliMain()
 ```
 
 # Install
@@ -61,7 +58,7 @@ not CommonJS.
 `options` [`Options?`](#options)\
 _Return value_: `string`
 
-Logs `error` on the console (`stderr`) then exits the process.
+Returns `error` as a prettified string.
 
 This never throws. Invalid errors are silently
 [normalized](https://github.com/ehmicky/normalize-exception).
@@ -73,14 +70,14 @@ This never throws. Invalid errors are silently
 _Type_: `boolean`\
 _Default_: `true`
 
-Whether to log the error's stack trace.
+Whether to show the error's stack trace.
 
 #### 📢 props
 
 _Type_: `boolean`\
 _Default_: `true`
 
-Whether to log the error's additional properties.
+Whether to show the error's additional properties.
 
 #### 🖍️ colors
 
@@ -141,6 +138,8 @@ string.
   update an error's stack
 - [`error-cause-polyfill`](https://github.com/ehmicky/error-cause-polyfill):
   Polyfill `error.cause`
+- [`handle-cli-error`](https://github.com/ehmicky/handle-cli-error): 💣 Error
+  handler for CLI applications 💥
 - [`log-process-errors`](https://github.com/ehmicky/log-process-errors): Show
   some ❤ to Node.js process errors
 - [`error-http-response`](https://github.com/ehmicky/error-http-response):
