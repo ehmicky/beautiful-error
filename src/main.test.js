@@ -1,5 +1,5 @@
 import test from 'ava'
-import { validateOptions } from 'handle-cli-error'
+import { validateOptions } from 'pretty-cli-error'
 import { each } from 'test-each'
 
 import { handleError } from './helpers/main.test.js'

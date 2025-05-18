@@ -1,6 +1,6 @@
 import { argv } from 'node:process'
 
-import handleCliError from 'handle-cli-error'
+import prettyCliError from 'pretty-cli-error'
 
 const main = () => {
   const handlerTimeout = Number(argv[2])
@@ -9,7 +9,7 @@ const main = () => {
   try {
     runFunc(logicTimeout)
   } catch (error) {
-    handleCliError(error, { timeout: handlerTimeout })
+    prettyCliError(error, { timeout: handlerTimeout })
   }
 }
 

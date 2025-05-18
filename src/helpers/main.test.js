@@ -1,7 +1,7 @@
 import process from 'node:process'
 
 import { install } from '@sinonjs/fake-timers'
-import handleCliError from 'handle-cli-error'
+import prettyCliError from 'pretty-cli-error'
 import { stub } from 'sinon'
 
 import { DEFAULT_TIMEOUT, INFINITE_TIMEOUT, NO_TIMEOUT } from '../timeout.js'
@@ -11,13 +11,13 @@ stub(console, 'error')
 stub(process, 'exit')
 const clock = install()
 
-// `handle-cli-error` use global variables `process.exitCode`, `process.exit()`
+// `pretty-cli-error` use global variables `process.exitCode`, `process.exit()`
 // and `console.error()` so we need to mock them.
 // It also relies on timeout, which we need to mock as well.
 export const handleError = (error, options) => {
   try {
     resetMocks()
-    handleCliError(error, options)
+    prettyCliError(error, options)
     // eslint-disable-next-line no-restricted-globals, no-console
     const consoleArg = getStubArg(console.error)
     const processExitArgs = getProcessExitArgs(options)

@@ -2,12 +2,12 @@ import type { Styles } from 'chalk-string'
 import type figures from 'figures'
 
 /**
- * Validate `handle-cli-error` options
+ * Validate `pretty-cli-error` options
  */
 export function validateOptions(options: unknown): asserts options is Options
 
 /**
- * `handle-cli-error` options
+ * `pretty-cli-error` options
  */
 export interface Options {
   /**
@@ -93,7 +93,7 @@ export interface Options {
    *
    * @example
    * ```js
-   * handleCliError(error, {
+   * prettyCliError(error, {
    *   InputError: { exitCode: 1, stack: false },
    *   DatabaseError: { exitCode: 2, stack: false },
    *   default: { exitCode: 3 },
@@ -114,17 +114,17 @@ export interface Options {
  * @example
  * ```js
  * #!/usr/bin/env node
- * import handleCliError from 'handle-cli-error'
+ * import prettyCliError from 'pretty-cli-error'
  *
  * const cliMain = () => {
  *   try {
  *     // ...
  *   } catch (error) {
- *     handleCliError(error) // Logs `error` then exit the process
+ *     prettyCliError(error) // Logs `error` then exit the process
  *   }
  * }
  *
  * cliMain()
  * ```
  */
-export default function handleCliError(error: unknown, options?: Options): void
+export default function prettyCliError(error: unknown, options?: Options): void

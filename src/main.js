@@ -7,7 +7,7 @@ import { printError } from './print/main.js'
 export { validateOptions } from './options/validate.js'
 
 // Print CLI errors and exit, depending on the error class
-const handleCliError = (error, opts) => {
+const prettyCliError = (error, opts) => {
   const errorA = normalizeException(error)
   const {
     error: errorB,
@@ -17,4 +17,4 @@ const handleCliError = (error, opts) => {
   exitProcess(exitCode, timeout)
 }
 
-export default handleCliError
+export default prettyCliError

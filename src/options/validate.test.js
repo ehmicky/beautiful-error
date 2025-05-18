@@ -1,11 +1,11 @@
 import test from 'ava'
-import { validateOptions } from 'handle-cli-error'
+import { validateOptions } from 'pretty-cli-error'
 import { each } from 'test-each'
 
 import { INVALID_OPTS_EXIT_CODE } from '../exit.js'
 import { handleError } from '../helpers/main.test.js'
 
-const PACKAGE_NAME = 'handle-cli-error'
+const PACKAGE_NAME = 'pretty-cli-error'
 
 each(
   [
