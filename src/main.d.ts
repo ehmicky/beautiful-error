@@ -10,4 +10,7 @@ export interface Options {}
  * ```js
  * ```
  */
-export default function prettyCliError(value: unknown, options?: Options): object
+export default function prettyCliError(
+  value: unknown,
+  options?: Options,
+): object
