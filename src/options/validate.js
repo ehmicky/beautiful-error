@@ -3,45 +3,37 @@ import isPlainObj from 'is-plain-obj'
 import { validateHeader } from '../header.js'
 import { validateIcon } from '../icon.js'
 
-import { handleInvalidOpts } from './invalid.js'
-
 // Validate option values.
 // This is exported, although not documented.
 export const validateOptions = (opts) => {
-  validateAllOpts(opts, [])
-}
-
-const validateAllOpts = (opts, optName) => {
   if (opts === undefined) {
     return
   }
 
   if (!isPlainObj(opts)) {
-    handleInvalidOpts('must be a plain object', opts, optName)
+    throw new Error(`options must be a plain object: ${opts}`)
   }
 
-  Object.entries(opts).forEach(([key, optValue]) => {
-    validateOpt(optValue, [...optName, key])
-  })
+  Object.entries(opts).forEach(validateOpt)
 }
 
-const validateOpt = (optValue, optName) => {
+const validateOpt = ([optName, optValue]) => {
   if (optValue === undefined) {
     return
   }
 
-  const validator = VALIDATORS[optName.at(-1)]
+  const validator = VALIDATORS[optName]
 
   if (validator === undefined) {
-    handleInvalidOpts('is an unknown option', '', optName)
+    throw new Error(`"${optName}" is an unknown option`)
   }
 
-  validator(optValue, optName, validateAllOpts)
+  validator(optValue, optName)
 }
 
 const validateBooleanOpt = (value, optName) => {
   if (typeof value !== 'boolean') {
-    handleInvalidOpts('must be a boolean', value, optName)
+    throw new TypeError(`"${optName}" must be a boolean: ${value}`)
   }
 }
 
