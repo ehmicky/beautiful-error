@@ -18,20 +18,15 @@ import {
 // aggregate `errors`, add colors, inline preview, etc. using `util.inspect()`.
 export const printError = ({
   error,
-  silent,
   stack,
   props,
   colors,
   icon,
   header,
 }) => {
-  if (silent) {
-    return
-  }
-
   const { addStyles, useColors } = getColors(colors)
   const errorString = serializeError({ error, stack, props, useColors })
-  const errorStringA = prettifyError({
+  return prettifyError({
     error,
     errorString,
     addStyles,
@@ -39,8 +34,6 @@ export const printError = ({
     icon,
     header,
   })
-  // eslint-disable-next-line no-restricted-globals, no-console
-  console.error(errorStringA)
 }
 
 const serializeError = ({ error, stack, props, useColors }) => {
@@ -51,6 +44,5 @@ const serializeError = ({ error, stack, props, useColors }) => {
     depth: PRINT_MAX_DEPTH,
   })
   restoreStack(errorA, stack)
-  const errorStringA = omitStackBracket(errorString)
-  return errorStringA
+  return omitStackBracket(errorString)
 }

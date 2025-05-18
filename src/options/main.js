@@ -1,7 +1,5 @@
 import normalizeException from 'normalize-exception'
 
-import { INVALID_OPTS_EXIT_CODE } from '../exit.js'
-
 import { applyClassesOpts } from './classes.js'
 import { applyDefaultOpts, DEFAULT_OPTS } from './default.js'
 import { validateOptions } from './validate.js'
@@ -26,7 +24,4 @@ const safeGetOpts = (opts, error) => {
 }
 
 // Options used when invalid input is passed
-const INVALID_OPTS = {
-  ...DEFAULT_OPTS,
-  exitCode: INVALID_OPTS_EXIT_CODE,
-}
+const INVALID_OPTS = { ...DEFAULT_OPTS }

@@ -1,8 +1,6 @@
 import test from 'ava'
-import { validateOptions } from 'pretty-cli-error'
+import prettyCliError, { validateOptions } from 'pretty-cli-error'
 import { each } from 'test-each'
-
-import { handleError } from './helpers/main.test.js'
 
 each(
   [
@@ -12,17 +10,17 @@ each(
     { error: new TypeError('test'), expectedMessage: 'TypeError: test' },
   ],
   ({ title }, { error, expectedMessage }) => {
-    test.serial(`Normalize error | ${title}`, (t) => {
-      const { consoleArg } = handleError(error)
-      t.true(consoleArg.includes(expectedMessage))
+    test(`Normalize error | ${title}`, (t) => {
+      const message = prettyCliError(error)
+      t.true(message.includes(expectedMessage))
     })
   },
 )
 
-test.serial('validateOpts() throws on invalid options', (t) => {
-  t.throws(validateOptions.bind(undefined, { silent: 'true' }))
+test('validateOpts() throws on invalid options', (t) => {
+  t.throws(validateOptions.bind(undefined, { stack: 'true' }))
 })
 
-test.serial('validateOpts() does not throw on valid options', (t) => {
-  t.notThrows(validateOptions.bind(undefined, { silent: true }))
+test('validateOpts() does not throw on valid options', (t) => {
+  t.notThrows(validateOptions.bind(undefined, { stack: true }))
 })

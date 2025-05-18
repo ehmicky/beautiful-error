@@ -1,6 +1,5 @@
 import normalizeException from 'normalize-exception'
 
-import { exitProcess } from './exit.js'
 import { getOpts } from './options/main.js'
 import { printError } from './print/main.js'
 
@@ -11,10 +10,9 @@ const prettyCliError = (error, opts) => {
   const errorA = normalizeException(error)
   const {
     error: errorB,
-    opts: { silent, stack, props, colors, icon, header, exitCode, timeout },
+    opts: { stack, props, colors, icon, header },
   } = getOpts(opts, errorA)
-  printError({ error: errorB, silent, stack, props, colors, icon, header })
-  exitProcess(exitCode, timeout)
+  return printError({ error: errorB, stack, props, colors, icon, header })
 }
 
 export default prettyCliError

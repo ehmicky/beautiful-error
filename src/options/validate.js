@@ -1,9 +1,7 @@
 import isPlainObj from 'is-plain-obj'
 
-import { validateExitCode } from '../exit.js'
 import { validateHeader } from '../print/header.js'
 import { validateIcon } from '../print/icon.js'
-import { validateTimeout } from '../timeout.js'
 
 import { validateClasses } from './classes.js'
 import { handleInvalidOpts } from './invalid.js'
@@ -49,13 +47,10 @@ const validateBooleanOpt = (value, optName) => {
 }
 
 const VALIDATORS = {
-  silent: validateBooleanOpt,
   stack: validateBooleanOpt,
   props: validateBooleanOpt,
   colors: validateBooleanOpt,
   icon: validateIcon,
   header: validateHeader,
-  exitCode: validateExitCode,
-  timeout: validateTimeout,
   classes: validateClasses,
 }
