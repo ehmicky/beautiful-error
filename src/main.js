@@ -15,7 +15,7 @@ import {
 
 export { validateOptions } from './options/validate.js'
 
-// Print CLI errors and exit, depending on the error class
+// Prettify error's message and stack
 const beautifulError = (error, opts) => {
   const errorA = normalizeException(error)
   const {
