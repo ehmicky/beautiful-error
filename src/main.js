@@ -1,7 +1,16 @@
+import { inspect } from 'node:util'
 import normalizeException from 'normalize-exception'
 
 import { getOpts } from './options/main.js'
-import { printError } from './print/main.js'
+import { getColors } from './print/colors.js'
+import { prettifyError } from './print/pretty.js'
+import { omitProps } from './print/props.js'
+import {
+  omitStack,
+  omitStackBracket,
+  PRINT_MAX_DEPTH,
+  restoreStack,
+} from './print/stack.js'
 
 export { validateOptions } from './options/validate.js'
 
@@ -12,7 +21,30 @@ const prettyCliError = (error, opts) => {
     error: errorB,
     opts: { stack, props, colors, icon, header },
   } = getOpts(opts, errorA)
-  return printError({ error: errorB, stack, props, colors, icon, header })
+
+  const { addStyles, useColors } = getColors(colors)
+  const errorString = serializeError({ error: errorB, stack, props, useColors })
+  return prettifyError({
+    error: errorB,
+    errorString,
+    addStyles,
+    useColors,
+    icon,
+    header,
+  })
+}
+
+// If `stack: false`, we do not print the error `stack` nor inline preview,
+// which is useful for well-known errors such as input validation.
+const serializeError = ({ error, stack, props, useColors }) => {
+  const errorA = omitProps(error, props)
+  omitStack(errorA, stack)
+  const errorString = inspect(errorA, {
+    colors: useColors,
+    depth: PRINT_MAX_DEPTH,
+  })
+  restoreStack(errorA, stack)
+  return omitStackBracket(errorString)
 }
 
 export default prettyCliError
