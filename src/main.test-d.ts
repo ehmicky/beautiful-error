@@ -1,8 +1,8 @@
 import { expectAssignable, expectType } from 'tsd'
 
-import templateName, { type Options } from 'template-name'
+import prettyCliError, { type Options } from 'pretty-cli-error'
 
-expectType<object>(templateName(true))
+expectType<object>(prettyCliError(true))
 
-templateName(true, {})
+prettyCliError(true, {})
 expectAssignable<Options>({})

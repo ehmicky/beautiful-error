@@ -1,3 +1,3 @@
-const templateName = (value) => value
+const prettyCliError = (value) => value
 
-export default templateName
+export default prettyCliError

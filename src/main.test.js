@@ -1,7 +1,7 @@
 import test from 'ava'
 
-import templateName from 'template-name'
+import prettyCliError from 'pretty-cli-error'
 
 test('Dummy test', (t) => {
-  t.true(templateName(true))
+  t.true(prettyCliError(true))
 })

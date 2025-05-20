@@ -1,12 +1,12 @@
-[![Node](https://img.shields.io/badge/-Node.js-808080?logo=node.js&colorA=404040&logoColor=66cc33)](https://www.npmjs.com/package/template-name)
-[![Browsers](https://img.shields.io/badge/-Browsers-808080?logo=firefox&colorA=404040)](https://unpkg.com/template-name?module)
+[![Node](https://img.shields.io/badge/-Node.js-808080?logo=node.js&colorA=404040&logoColor=66cc33)](https://www.npmjs.com/package/pretty-cli-error)
+[![Browsers](https://img.shields.io/badge/-Browsers-808080?logo=firefox&colorA=404040)](https://unpkg.com/pretty-cli-error?module)
 [![TypeScript](https://img.shields.io/badge/-Typed-808080?logo=typescript&colorA=404040&logoColor=0096ff)](/src/main.d.ts)
-[![Codecov](https://img.shields.io/badge/-Tested%20100%25-808080?logo=codecov&colorA=404040)](https://codecov.io/gh/ehmicky/template-name)
-[![Minified size](https://img.shields.io/bundlephobia/minzip/template-name?label&colorA=404040&colorB=808080&logo=webpack)](https://bundlephobia.com/package/template-name)
+[![Codecov](https://img.shields.io/badge/-Tested%20100%25-808080?logo=codecov&colorA=404040)](https://codecov.io/gh/ehmicky/pretty-cli-error)
+[![Minified size](https://img.shields.io/bundlephobia/minzip/pretty-cli-error?label&colorA=404040&colorB=808080&logo=webpack)](https://bundlephobia.com/package/pretty-cli-error)
 [![Mastodon](https://img.shields.io/badge/-Mastodon-808080.svg?logo=mastodon&colorA=404040&logoColor=9590F9)](https://fosstodon.org/@ehmicky)
 [![Medium](https://img.shields.io/badge/-Medium-808080.svg?logo=medium&colorA=404040)](https://medium.com/@ehmicky)
 
-template-description.
+Pretty errors for CLI applications.
 
 Work in progress!
 
@@ -15,13 +15,13 @@ Work in progress!
 # Example
 
 ```js
-import templateName from 'template-name'
+import prettyCliError from 'pretty-cli-error'
 ```
 
 # Install
 
 ```bash
-npm install template-name
+npm install pretty-cli-error
 ```
 
 <!--
@@ -39,7 +39,7 @@ not CommonJS.
 
 # API
 
-## templateName(value, options?)
+## prettyCliError(value, options?)
 
 `value` `any`\
 `options` [`Options?`](#options)\
@@ -79,6 +79,6 @@ If you would like to help us fix a bug or add a new feature, please check our
 <!-- ALL-CONTRIBUTORS-LIST:START -->
 <!-- prettier-ignore -->
 <!--
-<table><tr><td align="center"><a href="https://fosstodon.org/@ehmicky"><img src="https://avatars2.githubusercontent.com/u/8136211?v=4" width="100px;" alt="ehmicky"/><br /><sub><b>ehmicky</b></sub></a><br /><a href="https://github.com/ehmicky/template-name/commits?author=ehmicky" title="Code">💻</a> <a href="#design-ehmicky" title="Design">🎨</a> <a href="#ideas-ehmicky" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ehmicky/template-name/commits?author=ehmicky" title="Documentation">📖</a></td></tr></table>
+<table><tr><td align="center"><a href="https://fosstodon.org/@ehmicky"><img src="https://avatars2.githubusercontent.com/u/8136211?v=4" width="100px;" alt="ehmicky"/><br /><sub><b>ehmicky</b></sub></a><br /><a href="https://github.com/ehmicky/pretty-cli-error/commits?author=ehmicky" title="Code">💻</a> <a href="#design-ehmicky" title="Design">🎨</a> <a href="#ideas-ehmicky" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/ehmicky/pretty-cli-error/commits?author=ehmicky" title="Documentation">📖</a></td></tr></table>
  -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
