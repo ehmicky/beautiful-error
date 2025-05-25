@@ -79,11 +79,15 @@ export const PRINT_MAX_DEPTH = 2
 
 // `util.inspect()` surround `error.name: error.message` with `[...]` when
 // `error.stack` is missing. This is unwanted so we remove it.
+// https://github.com/nodejs/node/blob/6f045771fa637d28eef115f4a91ea0c6076a177d/lib/internal/util/inspect.js#L1486
+// This is done in some other cases (like when `error.stack` is odd looking)
+// which we do not check since `error` has been normalized by
+// `normalize-exception`.
 // This is only removed for the top-level error since nested errors:
 //  - Are less frequent
 //  - Do not look as weird with `[...]`
 //  - Would be harder to fix
-export const omitStackBracket = (errorString) =>
-  errorString.replace(STACK_BRACKET_REGEXP, '$1')
-
-const STACK_BRACKET_REGEXP = /^\[([^\]]+)\]/u
+export const omitStackBracket = (errorString, message) =>
+  errorString.startsWith('[')
+    ? errorString.slice(1).replace(`${message}]`, message)
+    : errorString

@@ -32,16 +32,25 @@ const setDeepError = (error, depth) => {
 const recursiveError = new TypeError('test')
 // eslint-disable-next-line fp/no-mutation
 recursiveError.self = recursiveError
+
 const deepErrors = createDeepErrors()
+
 const ownNameError = new Error('test')
 // eslint-disable-next-line fp/no-mutation
 ownNameError.name = 'TypeError'
+
 const noStackError = new Error('test')
 // eslint-disable-next-line fp/no-mutating-methods
 Object.defineProperty(noStackError, 'stack', { value: noStackError.toString() })
 
+const noMessageError = new Error('')
+
+// eslint-disable-next-line fp/no-class
+class WrongNameError extends Error {}
+const wrongNameError = new WrongNameError('test')
+
 each(
-  [recursiveError, noStackError, ...deepErrors],
+  [recursiveError, noStackError, noMessageError, wrongNameError, ...deepErrors],
   [true, false, undefined],
   [true, false, undefined],
   // eslint-disable-next-line max-params
@@ -67,7 +76,8 @@ each(
 
     test(`Prints error name and message | ${title}`, (t) => {
       const message = beautifulError(error, { stack, props })
-      t.true(message.includes(`${error.name}: ${error.message}`))
+      const expectedMessage = error.message === '' ? '' : `: ${error.message}`
+      t.true(message.includes(`${error.name}${expectedMessage}`))
     })
   },
 )
