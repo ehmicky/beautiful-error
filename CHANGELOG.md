@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-- Upgrade dependency `chalk-string`
+- Upgrade dependency [`chalk-string`](https://github.com/ehmicky/chalk-string)
 
 # 1.0.2
 
