@@ -5,7 +5,8 @@ import { each } from 'test-each'
 
 import beautifulError from 'beautiful-error'
 
-const addStyles = chalkString({ colors: true })
+const addStyles = (styles, string) =>
+  chalkString(styles, { colors: true })(string)
 const testOpts = { icon: '', colors: true }
 
 each(

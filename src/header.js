@@ -1,7 +1,5 @@
 import chalkString from 'chalk-string'
 
-const globalAddStyles = chalkString({ colors: true })
-
 // Validate `header` option
 export const validateHeader = (value, optName) => {
   if (typeof value !== 'string') {
@@ -13,7 +11,7 @@ export const validateHeader = (value, optName) => {
   }
 
   try {
-    globalAddStyles(value, '')
+    chalkString(value)
   } catch (error) {
     throw new Error(
       `"${optName}" ${value} must be a valid style: ${error.message}`,
@@ -22,28 +20,17 @@ export const validateHeader = (value, optName) => {
 }
 
 // Apply `header` option to colorize the error's icon and name
-export const applyHeader = ({
-  messageLines,
-  header,
-  useColors,
-  addStyles,
-  error,
-}) => {
-  if (header === '' || !useColors) {
+export const applyHeader = ({ messageLines, useColors, theme, error }) => {
+  if (theme.header === undefined || !useColors) {
     return messageLines
   }
 
   const [firstMessageLine, ...messageLinesA] = messageLines
-  const firstMessageLineA = applyHeaderLine({
-    firstMessageLine,
-    header,
-    addStyles,
-    error,
-  })
+  const firstMessageLineA = applyHeaderLine(firstMessageLine, theme, error)
   return [firstMessageLineA, ...messageLinesA]
 }
 
-const applyHeaderLine = ({ firstMessageLine, header, addStyles, error }) => {
+const applyHeaderLine = (firstMessageLine, theme, error) => {
   const endIndex = getEndIndex(firstMessageLine, error)
 
   if (endIndex === -1) {
@@ -52,7 +39,7 @@ const applyHeaderLine = ({ firstMessageLine, header, addStyles, error }) => {
 
   const start = firstMessageLine.slice(0, endIndex)
   const end = firstMessageLine.slice(endIndex)
-  return `${addStyles(header, start)}${end}`
+  return `${theme.header(start)}${end}`
 }
 
 const getEndIndex = (firstMessageLine, error) => {

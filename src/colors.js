@@ -4,16 +4,23 @@ import chalkString from 'chalk-string'
 
 // Compute the `colors` option, which defaults to `true` if the output supports
 // colors.
-export const getColors = (colors) => {
-  const addStyles = chalkString({ colors, stream: stderr })
-  const useColors = addStyles('red', '_') !== '_'
-  return { addStyles, useColors }
+export const getTheme = (colors, header) => {
+  const theme = {
+    bold: getThemeColor('bold', colors),
+    italic: getThemeColor('italic', colors),
+    header: header === '' ? undefined : getThemeColor(header, colors),
+  }
+  const useColors = theme.bold('_') !== '_'
+  return { theme, useColors }
 }
+
+const getThemeColor = (style, colors) =>
+  chalkString(style, { colors, stream: stderr })
 
 // When `colors` is true, add colors to quoted strings.
 // `util.inspect()` strips ANSI sequences, so this must be done on the
 // serialized output.
-export const colorizeLine = (line, useColors, addStyles) => {
+export const colorizeLine = (line, useColors, { bold, italic }) => {
   if (!useColors) {
     return line
   }
@@ -21,15 +28,15 @@ export const colorizeLine = (line, useColors, addStyles) => {
   return line
     .replaceAll(
       DOUBLE_QUOTED_STRING,
-      colorizeQuotedString.bind(undefined, addStyles, 'bold'),
+      colorizeQuotedString.bind(undefined, bold),
     )
     .replaceAll(
       SINGLE_QUOTED_STRING,
-      colorizeQuotedString.bind(undefined, addStyles, 'bold'),
+      colorizeQuotedString.bind(undefined, bold),
     )
     .replaceAll(
       BACKTICK_QUOTED_STRING,
-      colorizeQuotedString.bind(undefined, addStyles, 'italic'),
+      colorizeQuotedString.bind(undefined, italic),
     )
 }
 
@@ -39,10 +46,9 @@ const BACKTICK_QUOTED_STRING = /(`)([^`]+)(`)/gu
 
 const colorizeQuotedString = (
   addStyles,
-  styles,
   fullString,
   startQuote,
   quotedString,
   endQuote,
   // eslint-disable-next-line max-params
-) => `${startQuote}${addStyles(styles, quotedString)}${endQuote}`
+) => `${startQuote}${addStyles(quotedString)}${endQuote}`

@@ -2,7 +2,7 @@ import { inspect } from 'node:util'
 
 import normalizeException from 'normalize-exception'
 
-import { getColors } from './colors.js'
+import { getTheme } from './colors.js'
 import { getOpts } from './options/main.js'
 import { prettifyError } from './pretty.js'
 import { omitProps } from './props.js'
@@ -23,15 +23,14 @@ const beautifulError = (error, opts) => {
     opts: { stack, props, colors, icon, header },
   } = getOpts(errorA, opts)
 
-  const { addStyles, useColors } = getColors(colors)
+  const { theme, useColors } = getTheme(colors, header)
   const errorString = serializeError({ error: errorB, stack, props, useColors })
   return prettifyError({
     error: errorB,
     errorString,
-    addStyles,
+    theme,
     useColors,
     icon,
-    header,
   })
 }
 

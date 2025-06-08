@@ -8,42 +8,26 @@ import { addIcon } from './icon.js'
 export const prettifyError = ({
   error,
   errorString,
-  addStyles,
+  theme,
   useColors,
   icon,
-  header,
 }) => {
   const lines = errorString.split('\n')
-  const linesA = prettifyLines({
-    error,
-    lines,
-    addStyles,
-    useColors,
-    icon,
-    header,
-  })
+  const linesA = prettifyLines({ error, lines, theme, useColors, icon })
   return linesA.join('\n')
 }
 
-const prettifyLines = ({
-  error,
-  lines,
-  addStyles,
-  useColors,
-  icon,
-  header,
-}) => {
+const prettifyLines = ({ error, lines, theme, useColors, icon }) => {
   const { previewLines, messageLines, stackLines } = splitStack(lines, error)
   const messageLinesA = addIcon(messageLines, icon)
   const messageLinesB = applyHeader({
     messageLines: messageLinesA,
-    header,
     useColors,
-    addStyles,
+    theme,
     error,
   })
   const messageLinesC = messageLinesB.map((line) =>
-    colorizeLine(line, useColors, addStyles),
+    colorizeLine(line, useColors, theme),
   )
   return [...previewLines, ...messageLinesC, ...stackLines]
 }

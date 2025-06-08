@@ -4,7 +4,8 @@ import { each } from 'test-each'
 
 import beautifulError from 'beautiful-error'
 
-const addStyles = chalkString({ colors: true })
+const addStyles = (styles, string) =>
+  chalkString(styles, { colors: true })(string)
 
 test('"colors" does not colorize quoted strings in stack line', (t) => {
   const error = new Error('test')

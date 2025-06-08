@@ -6,7 +6,8 @@ import { each } from 'test-each'
 import beautifulError from 'beautiful-error'
 
 const testError = new TypeError('test')
-const addStyles = chalkString({ colors: true })
+const addStyles = (styles, string) =>
+  chalkString(styles, { colors: true })(string)
 
 each([true, false], ({ title }, colors) => {
   test(`Add colors unless "colors" is false | ${title}`, (t) => {

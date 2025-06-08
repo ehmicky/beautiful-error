@@ -1,3 +1,9 @@
+# 1.1.0
+
+## Dependencies
+
+- Upgrade dependency `chalk-string`
+
 # 1.0.2
 
 ## Bug fixes
