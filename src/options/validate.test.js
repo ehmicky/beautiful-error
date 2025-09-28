@@ -16,6 +16,8 @@ each(
     { header: 0 },
     { header: 'red-0' },
     { header: 'unknown' },
+    { classes: 0 },
+    { classes: { TypeError: 0 } },
     { unknown: true },
   ],
   ({ title }, options) => {
@@ -38,6 +40,10 @@ each(
     { cause: undefined },
     { props: undefined },
     { colors: undefined },
+    { icon: undefined },
+    { header: undefined },
+    { classes: undefined },
+    { classes: { TypeError: undefined } },
   ],
   ({ title }, options) => {
     test(`Allow undefined options | ${title}`, (t) => {

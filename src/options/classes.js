@@ -11,7 +11,7 @@ export const getClassesOpts = ({ classes = {}, ...opts }) => {
 }
 
 export const applyClassesOpts = (name, classes, opts) => {
-  const classesOpts = classes[name]
+  const classesOpts = classes[name] ?? {}
   validateObject(classesOpts, `The option 'classes.${name}'`)
   return { ...opts, ...removeUndefined(classesOpts) }
 }
