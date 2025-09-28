@@ -13,6 +13,8 @@
 ## Features
 
 - Nested errors are now printed on their own, which result in a prettier output.
+- Add the [`classes`](README.md#-classes) option to set error class-specific
+  options.
 
 # 1.1.0
 
