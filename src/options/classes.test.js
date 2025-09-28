@@ -9,3 +9,10 @@ test('Can set classes.* that matches', (t) => {
   })
   t.true(message.includes(`${figures.warning} TypeError: test`))
 })
+
+test('Can set classes.* that does not match', (t) => {
+  const message = beautifulError(new Error('test'), {
+    classes: { TypeError: { icon: 'warning' } },
+  })
+  t.true(message.includes(`${figures.cross} Error: test`))
+})
