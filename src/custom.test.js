@@ -105,3 +105,10 @@ test('error.beautiful() works recursively', (t) => {
   t.true(message.includes(`${figures.cross} Error: test`))
   t.true(message.includes(`\n    ${figures.cross} TESTERROR: INNER`))
 })
+
+test('"custom" option can be a string', (t) => {
+  const error = new Error('test')
+  error.pretty = (errorString) => errorString.toUpperCase()
+  const message = beautifulError(error, { custom: 'pretty' })
+  t.true(message.includes(`${figures.cross} ERROR: TEST`))
+})
