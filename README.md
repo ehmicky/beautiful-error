@@ -14,7 +14,8 @@ Prettify error messages and stacks.
 # Features
 
 - 🖍️ Pretty [colors](#%EF%B8%8F-colors), [icons](#-icon) and [header](#-header)
-- 💣 [Error class-specific](#-classes) handling
+- 💣 [Error class-specific](#-classes) and [custom](#custom-serialization)
+  handling
 - ⛑️ [Normalize](https://github.com/ehmicky/normalize-exception) invalid errors
 - 🔕 Log verbosity: [stack](#-stack), [nested errors](#-cause),
   [properties](#-props)
