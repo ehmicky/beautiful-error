@@ -35,7 +35,7 @@ const validateOpt = ([optName, optValue]) => {
   const validator = VALIDATORS[optName]
 
   if (validator === undefined) {
-    throw new Error(`"${optName}" is an unknown option`)
+    throw new Error(`'${optName}' is an unknown option`)
   }
 
   validator(optValue, optName)
@@ -43,7 +43,7 @@ const validateOpt = ([optName, optValue]) => {
 
 const validateBooleanOpt = (value, optName) => {
   if (typeof value !== 'boolean') {
-    throw new TypeError(`"${optName}" must be a boolean: ${value}`)
+    throw new TypeError(`The option '${optName}' must be a boolean: ${value}`)
   }
 }
 
