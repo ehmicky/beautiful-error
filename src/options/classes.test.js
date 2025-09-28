@@ -24,3 +24,11 @@ test('Can set classes.* that overrides', (t) => {
   })
   t.true(message.includes(`${figures.warning} TypeError: test`))
 })
+
+test('Can set classes.* undefined', (t) => {
+  const message = beautifulError(new TypeError('test'), {
+    icon: 'warning',
+    classes: { TypeError: { icon: undefined } },
+  })
+  t.true(message.includes(`${figures.warning} TypeError: test`))
+})
