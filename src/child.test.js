@@ -41,3 +41,18 @@ test('Nested aggregate errors are serialized by default', (t) => {
   t.true(message.includes('TypeError: .errors.errors'))
   t.false(message.includes('[errors]'))
 })
+
+test('Cause is restored', (t) => {
+  const descriptor = Object.getOwnPropertyDescriptor(causeError, 'cause')
+  beautifulError(causeError)
+  t.deepEqual(Object.getOwnPropertyDescriptor(causeError, 'cause'), descriptor)
+})
+
+test('Aggregate errors are restored', (t) => {
+  const descriptor = Object.getOwnPropertyDescriptor(aggregateError, 'errors')
+  beautifulError(aggregateError)
+  t.deepEqual(
+    Object.getOwnPropertyDescriptor(aggregateError, 'errors'),
+    descriptor,
+  )
+})
