@@ -64,7 +64,20 @@ export interface Options {
   readonly header?: Styles | ''
 
   /**
+   * Name of a method to map the output. That method must take the output as a
+   * string argument, transform it then return it.
    *
+   * @example
+   * ```js
+   * class ExampleError extends Error {
+   *   beautiful(output) {
+   *     return output.replaceAll('secret', '***')
+   *   }
+   * }
+   *
+   * const error = new ExampleError('Unknown value: secret')
+   * const message = beautifulError(error) // 'Unknown value: ***'
+   * ```
    *
    * @default 'beautiful'
    */
