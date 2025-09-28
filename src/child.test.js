@@ -1,4 +1,5 @@
 import test from 'ava'
+import figures from 'figures'
 
 import beautifulError from 'beautiful-error'
 
@@ -76,3 +77,8 @@ test('Child errors are indented', (t) => {
 })
 
 const INDENT_SIZE = 4
+
+test('Child errors are prettified', (t) => {
+  const message = beautifulError(causeError)
+  t.true(message.includes(`${figures.cross} RangeError: .cause`))
+})
