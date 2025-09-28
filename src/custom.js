@@ -11,16 +11,7 @@ export const callCustom = (error, errorString, recursiveBeautiful) => {
     errorString,
     recursiveBeautiful,
   )
-
-  if (typeof newErrorString !== 'string') {
-    return recursiveBeautiful(
-      new TypeError(
-        `'error.beautiful()' must return a string, not: ${safeString(newErrorString)}`,
-      ),
-    )
-  }
-
-  return newErrorString
+  return validateReturnValue(newErrorString, recursiveBeautiful)
 }
 
 const callBeautifulMethod = (error, errorString, recursiveBeautiful) => {
@@ -53,6 +44,17 @@ const serializeError = (error, recursiveBeautiful) => {
 }
 
 const CUSTOM_MAP = new WeakSet()
+
+const validateReturnValue = (errorString, recursiveBeautiful) => {
+  if (typeof errorString === 'string') {
+    return errorString
+  }
+
+  const error = new TypeError(
+    `'error.beautiful()' must return a string, not: ${safeString(errorString)}`,
+  )
+  return recursiveBeautiful(error)
+}
 
 const safeString = (value) => {
   try {
