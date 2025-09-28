@@ -115,3 +115,8 @@ each(['pretty', Symbol('pretty')], ({ title }, custom) => {
     t.true(message.includes(`${figures.cross} ERROR: TEST`))
   })
 })
+
+test('error.beautiful() is not used if "custom" option is set', (t) => {
+  const message = beautifulError(new TestError('test'), { custom: 'pretty' })
+  t.false(message.includes('TEST'))
+})
