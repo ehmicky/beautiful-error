@@ -14,6 +14,7 @@ Prettify error messages and stacks.
 # Features
 
 - 🖍️ Pretty [colors](#%EF%B8%8F-colors), [icons](#-icon) and [header](#-header)
+- 💣 [Error class-specific](#-classes) handling
 - ⛑️ [Normalize](https://github.com/ehmicky/normalize-exception) invalid errors
 - 🔕 Log verbosity: [stack](#-stack), [nested errors](#-cause),
   [properties](#-props)
@@ -25,6 +26,8 @@ Prettify error messages and stacks.
 
 # Example
 
+## General
+
 ```js
 import beautifulError from 'beautiful-error'
 
@@ -34,6 +37,16 @@ try {
   const message = beautifulError(error)
   console.error(message)
 }
+```
+
+## Error class-specific
+
+```js
+const message = beautifulError(error, {
+  InputError: { icon: 'warning', stack: false },
+  DatabaseError: { icon: 'info', stack: false },
+  default: { icon: 'cross' },
+})
 ```
 
 # Install
@@ -117,6 +130,18 @@ Color/style of the error's [icon](#-icon) and name. The available values are
 listed [here](https://github.com/ehmicky/chalk-string#available-styles). Several
 styles can be specified by using spaces. Can be disabled by passing an empty
 string.
+
+#### 💣 classes
+
+_Type_: `object`\
+_Default_: `{}`
+
+Specify [different options per error class](#error-class-specific). The object:
+
+- Keys are either the
+  [`error.name`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/name),
+  or `"default"` (used if no `error.name` matches)
+- Values are [options](#options) objects
 
 # Related projects
 
