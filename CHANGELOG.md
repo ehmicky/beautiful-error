@@ -1,3 +1,10 @@
+# 2.2.0
+
+## Features
+
+- Add a [`custom`](README.md#-custom) option to choose the name of the
+  customization method. By default, it is `'beautiful'`.
+
 # 2.1.0
 
 ## Features
