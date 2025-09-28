@@ -3,18 +3,23 @@ import figures from 'figures'
 
 import beautifulError from 'beautiful-error'
 
+// eslint-disable-next-line max-params
+const checkMessage = (t, message, icon, name) => {
+  t.true(message.includes(`${figures[icon]} ${name}: test`))
+}
+
 test('Can set classes.* that matches', (t) => {
   const message = beautifulError(new TypeError('test'), {
     classes: { TypeError: { icon: 'warning' } },
   })
-  t.true(message.includes(`${figures.warning} TypeError: test`))
+  checkMessage(t, message, 'warning', 'TypeError')
 })
 
 test('Can set classes.* that does not match', (t) => {
   const message = beautifulError(new Error('test'), {
     classes: { TypeError: { icon: 'warning' } },
   })
-  t.true(message.includes(`${figures.cross} Error: test`))
+  checkMessage(t, message, 'cross', 'Error')
 })
 
 test('Can set classes.* that overrides', (t) => {
@@ -22,7 +27,7 @@ test('Can set classes.* that overrides', (t) => {
     icon: 'info',
     classes: { TypeError: { icon: 'warning' } },
   })
-  t.true(message.includes(`${figures.warning} TypeError: test`))
+  checkMessage(t, message, 'warning', 'TypeError')
 })
 
 test('Can set classes.* undefined', (t) => {
@@ -30,21 +35,21 @@ test('Can set classes.* undefined', (t) => {
     icon: 'warning',
     classes: { TypeError: { icon: undefined } },
   })
-  t.true(message.includes(`${figures.warning} TypeError: test`))
+  checkMessage(t, message, 'warning', 'TypeError')
 })
 
 test('Can set classes.* empty', (t) => {
   const message = beautifulError(new TypeError('test'), {
     classes: { TypeError: {} },
   })
-  t.true(message.includes(`${figures.cross} TypeError: test`))
+  checkMessage(t, message, 'cross', 'TypeError')
 })
 
 test('Can set classes.default', (t) => {
   const message = beautifulError(new TypeError('test'), {
     classes: { default: { icon: 'warning' } },
   })
-  t.true(message.includes(`${figures.warning} TypeError: test`))
+  checkMessage(t, message, 'warning', 'TypeError')
 })
 
 test('Can set classes.default that overrides', (t) => {
@@ -52,7 +57,7 @@ test('Can set classes.default that overrides', (t) => {
     icon: 'info',
     classes: { default: { icon: 'warning' } },
   })
-  t.true(message.includes(`${figures.warning} TypeError: test`))
+  checkMessage(t, message, 'warning', 'TypeError')
 })
 
 test('Can set classes.default that is overridden', (t) => {
@@ -62,7 +67,7 @@ test('Can set classes.default that is overridden', (t) => {
       TypeError: { icon: 'warning' },
     },
   })
-  t.true(message.includes(`${figures.warning} TypeError: test`))
+  checkMessage(t, message, 'warning', 'TypeError')
 })
 
 test('Can set classes.default undefined', (t) => {
@@ -70,21 +75,21 @@ test('Can set classes.default undefined', (t) => {
     icon: 'warning',
     classes: { default: { icon: undefined } },
   })
-  t.true(message.includes(`${figures.warning} TypeError: test`))
+  checkMessage(t, message, 'warning', 'TypeError')
 })
 
 test('Can set classes.default empty', (t) => {
   const message = beautifulError(new TypeError('test'), {
     classes: { default: {} },
   })
-  t.true(message.includes(`${figures.cross} TypeError: test`))
+  checkMessage(t, message, 'cross', 'TypeError')
 })
 
 test('Can set classes.* in nested errors', (t) => {
   const message = beautifulError(
-    new TypeError('test', { cause: new URIError('.cause') }),
+    new TypeError('test', { cause: new URIError('test') }),
     { classes: { TypeError: { icon: 'warning' }, URIError: { icon: 'info' } } },
   )
-  t.true(message.includes(`${figures.warning} TypeError: test`))
-  t.true(message.includes(`${figures.info} URIError: .child`))
+  checkMessage(t, message, 'warning', 'TypeError')
+  checkMessage(t, message, 'info', 'URIError')
 })
