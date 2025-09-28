@@ -145,19 +145,15 @@ Specify [different options per error class](#error-class-specific). The object:
 
 ## Custom serialization
 
-Errors can customize how they are serialized by defining an `error.beautiful()`
-function returning a string. This can call `beautifulError()` itself.
+The output can be transformed/mapped by defining an `error.beautiful(output)`
+method returning a string.
 
-For example, to remove secret values:
-
-<!-- eslint-disable fp/no-class, fp/no-this -->
+<!-- eslint-disable fp/no-class -->
 
 ```js
-import beautifulError from 'beautiful-error'
-
 class ExampleError extends Error {
-  beautiful() {
-    return beautifulError(this).replaceAll('secret', '***')
+  beautiful(output) {
+    return output.replaceAll('secret', '***')
   }
 }
 
