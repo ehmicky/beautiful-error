@@ -4,6 +4,7 @@ import normalizeException from 'normalize-exception'
 
 import { pickChildErrors, restoreChildErrors } from './child.js'
 import { getTheme } from './colors.js'
+import { callCustom } from './custom.js'
 import { pickClassOpts } from './options/classes.js'
 import { getOpts } from './options/main.js'
 import { prettifyError } from './pretty.js'
@@ -15,16 +16,17 @@ import {
   restoreStack,
 } from './stack.js'
 
+// eslint-disable-next-line import/max-dependencies
 export { validateOptions } from './options/validate.js'
 
 // Prettify error's message and stack
 const beautifulError = (error, opts) => {
   const errorA = normalizeException(error)
   const { error: errorB, classes } = getOpts(errorA, opts)
-  return serializeFullError(errorB, 0, classes)
+  return serializeFullError({ error: errorB, depth: 0, classes, opts })
 }
 
-const serializeFullError = (error, depth, classes) => {
+const serializeFullError = ({ error, depth, classes, opts }) => {
   const classOpts = pickClassOpts(classes, error)
   const { cause, errors } = pickChildErrors(error)
   const childErrorStrings = getChildErrorStrings({
@@ -32,9 +34,10 @@ const serializeFullError = (error, depth, classes) => {
     errors,
     classes,
     classOpts,
+    opts,
     depth,
   })
-  const errorString = serializeOneError(error, depth, classOpts)
+  const errorString = serializeOneError({ error, depth, classOpts, opts })
   restoreChildErrors(error, cause, errors)
   return [errorString, ...childErrorStrings].join('\n')
 }
@@ -44,19 +47,29 @@ const getChildErrorStrings = ({
   errors = [],
   classes,
   classOpts,
+  opts,
   depth,
 }) =>
   classOpts.cause
     ? [cause, ...errors]
         .filter(Boolean)
-        .map((error) => serializeFullError(error, depth + 1, classes))
+        .map((error) =>
+          serializeFullError({ error, depth: depth + 1, classes, opts }),
+        )
     : []
 
-const serializeOneError = (
+const serializeOneError = ({
   error,
   depth,
-  { colors, header, stack, props, icon },
-) => {
+  classOpts: { colors, header, stack, props, icon },
+  opts,
+}) => {
+  const customReturn = callCustom(error, (cause) => beautifulError(cause, opts))
+
+  if (typeof customReturn === 'string') {
+    return customReturn
+  }
+
   const { theme, useColors } = getTheme(colors, header)
   const errorString = serializeError({ error, stack, props, useColors })
   return prettifyError({ error, errorString, depth, theme, useColors, icon })
