@@ -68,21 +68,3 @@ const serializeError = (error, { stack, props, useColors }) => {
 }
 
 export default beautifulError
-
-console.log(
-  beautifulError(
-    new AggregateError(
-      [
-        new TypeError('.errors[0]'),
-        new Error('.errors[1]', { cause: new Error('.errors[1].cause') }),
-      ],
-      'top',
-      {
-        cause: new AggregateError(
-          [new TypeError('.cause.errors[0]'), new Error('.cause.errors[1]')],
-          '.cause',
-        ),
-      },
-    ),
-  ),
-)
