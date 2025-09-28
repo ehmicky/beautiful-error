@@ -56,3 +56,23 @@ test('Aggregate errors are restored', (t) => {
     descriptor,
   )
 })
+
+test('Child errors are indented', (t) => {
+  const message = beautifulError(nestedCauseError)
+  const lines = message.split('\n')
+
+  const topLine = lines.find((line) => line.includes('TypeError: test'))
+  t.false(topLine.startsWith(' '))
+
+  const secondLine = lines.find((line) => line.includes('RangeError: .cause'))
+  t.true(secondLine.startsWith(' '.repeat(INDENT_SIZE)))
+  t.false(secondLine.startsWith(' '.repeat(INDENT_SIZE + 1)))
+
+  const thirdLine = lines.find((line) =>
+    line.includes('URIError: .cause.cause'),
+  )
+  t.true(thirdLine.startsWith(' '.repeat(INDENT_SIZE * 2)))
+  t.false(thirdLine.startsWith(' '.repeat(INDENT_SIZE * 2 + 1)))
+})
+
+const INDENT_SIZE = 4
