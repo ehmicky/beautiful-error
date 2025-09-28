@@ -9,6 +9,7 @@ each(
   [
     true,
     { stack: 0 },
+    { cause: 0 },
     { props: 0 },
     { colors: 0 },
     { icon: 'unknown' },
@@ -34,6 +35,7 @@ each(
     undefined,
     {},
     { stack: undefined },
+    { cause: undefined },
     { props: undefined },
     { colors: undefined },
   ],
