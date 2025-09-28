@@ -1,18 +1,18 @@
 import { stripVTControlCharacters } from 'node:util'
 
+import { indentChildLine } from './child.js'
 import { colorizeLine } from './colors.js'
 import { applyHeader } from './header.js'
 import { addIcon } from './icon.js'
 
 // Apply the `colors` option to make the error prettier
 export const prettifyError = (
-  error,
-  errorString,
+  { error, errorString, depth },
   { theme, useColors, icon },
 ) => {
   const lines = errorString.split('\n')
   const linesA = prettifyLines({ error, lines, theme, useColors, icon })
-  return linesA.join('\n')
+  return linesA.map((line) => indentChildLine(line, depth)).join('\n')
 }
 
 const prettifyLines = ({ error, lines, theme, useColors, icon }) => {

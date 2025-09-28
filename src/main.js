@@ -24,25 +24,25 @@ const beautifulError = (error, opts) => {
     opts: { stack, props, colors, icon, header },
   } = getOpts(errorA, opts)
   const { theme, useColors } = getTheme(colors, header)
-  return serializeFullError(errorB, { stack, props, theme, useColors, icon })
+  return serializeFullError(errorB, 0, { stack, props, theme, useColors, icon })
 }
 
-const serializeFullError = (error, opts) => {
+const serializeFullError = (error, depth, opts) => {
   const { cause, errors } = pickChildErrors(error)
-  const childErrorStrings = getChildErrorStrings({ cause, errors, opts })
-  const errorString = serializeOneError(error, opts)
+  const childErrorStrings = getChildErrorStrings({ cause, errors, opts, depth })
+  const errorString = serializeOneError(error, depth, opts)
   restoreChildErrors(error, cause, errors)
   return [errorString, ...childErrorStrings].join('\n\n')
 }
 
-const getChildErrorStrings = ({ cause, errors = [], opts }) =>
+const getChildErrorStrings = ({ cause, errors = [], opts, depth }) =>
   [cause, ...errors]
     .filter(Boolean)
-    .map((error) => serializeFullError(error, opts))
+    .map((error) => serializeFullError(error, depth + 1, opts))
 
-const serializeOneError = (error, opts) => {
+const serializeOneError = (error, depth, opts) => {
   const errorString = serializeError(error, opts)
-  return prettifyError(error, errorString, opts)
+  return prettifyError({ error, errorString, depth }, opts)
 }
 
 // If `stack: false`, we do not print the error `stack` nor inline preview,
@@ -60,4 +60,20 @@ const serializeError = (error, { stack, props, useColors }) => {
 
 export default beautifulError
 
-console.log(beautifulError(new Error('oh')))
+console.log(
+  beautifulError(
+    new AggregateError(
+      [
+        new TypeError('.errors[0]'),
+        new Error('.errors[1]', { cause: new Error('.errors[1].cause') }),
+      ],
+      'top',
+      {
+        cause: new AggregateError(
+          [new TypeError('.cause.errors[0]'), new Error('.cause.errors[1]')],
+          '.cause',
+        ),
+      },
+    ),
+  ),
+)

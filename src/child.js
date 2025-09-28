@@ -21,3 +21,8 @@ export const restoreChildErrors = (error, cause, errors) => {
     setNonEnumProp(error, 'errors', errors)
   }
 }
+
+export const indentChildLine = (line, depth) =>
+  depth === 0 ? line : `${' '.repeat(depth * INDENT_SIZE)}${line}`
+
+const INDENT_SIZE = 4
