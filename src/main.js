@@ -62,7 +62,7 @@ const getChildErrorStrings = ({
 const getErrorString = (
   error,
   opts,
-  { colors, header, stack, props, icon },
+  { colors, header, stack, props, icon, custom },
 ) => {
   const { theme, useColors } = getTheme(colors, header)
   const errorString = serializeError({ error, stack, props, useColors })
@@ -73,9 +73,12 @@ const getErrorString = (
     useColors,
     icon,
   })
-  return callCustom(error, newErrorString, (cause) =>
-    beautifulError(cause, opts),
-  )
+  return callCustom({
+    error,
+    errorString: newErrorString,
+    custom,
+    recursiveBeautiful: (cause) => beautifulError(cause, opts),
+  })
 }
 
 // If `stack: false`, we do not print the error `stack` nor inline preview,

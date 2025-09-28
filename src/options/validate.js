@@ -41,17 +41,26 @@ const validateOpt = ([optName, optValue]) => {
   validator(optValue, optName)
 }
 
-const validateBooleanOpt = (value, optName) => {
+const validateBoolean = (value, optName) => {
   if (typeof value !== 'boolean') {
     throw new TypeError(`The option '${optName}' must be a boolean: ${value}`)
   }
 }
 
+const validateStringOrSymbol = (value, optName) => {
+  if (typeof value !== 'string' && typeof value !== 'symbol') {
+    throw new TypeError(
+      `The option '${optName}' must be a string or a symbol: ${value}`,
+    )
+  }
+}
+
 const VALIDATORS = {
-  stack: validateBooleanOpt,
-  cause: validateBooleanOpt,
-  props: validateBooleanOpt,
-  colors: validateBooleanOpt,
+  stack: validateBoolean,
+  cause: validateBoolean,
+  props: validateBoolean,
+  colors: validateBoolean,
   icon: validateIcon,
   header: validateHeader,
+  custom: validateStringOrSymbol,
 }

@@ -13,6 +13,7 @@ export const DEFAULT_OPTS = {
   props: true,
   icon: 'cross',
   header: 'red bold',
+  custom: 'beautiful',
 }
 
 // Remove `undefined` values of an object
