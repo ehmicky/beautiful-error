@@ -16,3 +16,11 @@ test('Can set classes.* that does not match', (t) => {
   })
   t.true(message.includes(`${figures.cross} Error: test`))
 })
+
+test('Can set classes.* that overrides', (t) => {
+  const message = beautifulError(new TypeError('test'), {
+    icon: 'info',
+    classes: { TypeError: { icon: 'warning' } },
+  })
+  t.true(message.includes(`${figures.warning} TypeError: test`))
+})
