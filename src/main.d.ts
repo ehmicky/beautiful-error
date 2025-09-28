@@ -18,6 +18,16 @@ export interface Options {
   readonly stack?: boolean
 
   /**
+   * Whether to show
+   * [`error.cause`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause)
+   * and
+   * [`error.errors`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AggregateError/errors).
+   *
+   * @default true
+   */
+  readonly cause?: boolean
+
+  /**
    * Whether to show the error's additional properties.
    *
    * @default true

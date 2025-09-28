@@ -18,6 +18,12 @@ expectAssignable<Options>({ stack: true })
 beautifulError('', { stack: 'true' })
 expectNotAssignable<Options>({ stack: 'true' })
 
+beautifulError('', { cause: true })
+expectAssignable<Options>({ cause: true })
+// @ts-expect-error
+beautifulError('', { cause: 'true' })
+expectNotAssignable<Options>({ cause: 'true' })
+
 beautifulError('', { props: true })
 expectAssignable<Options>({ props: true })
 // @ts-expect-error
