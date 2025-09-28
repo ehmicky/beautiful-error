@@ -7,14 +7,15 @@ export const callCustom = (error, recursiveBeautiful) => {
 
   const errorString = callBeautifulMethod(error, recursiveBeautiful)
 
-  if (typeof errorString === 'string') {
-    return errorString
+  if (typeof errorString !== 'string') {
+    return recursiveBeautiful(
+      new TypeError(
+        `'error.beautiful()' must return a string, not: ${safeString(errorString)}`,
+      ),
+    )
   }
 
-  const typeError = new TypeError(
-    `'error.beautiful()' must return a string, not: ${safeString(errorString)}`,
-  )
-  return recursiveBeautiful(typeError)
+  return errorString
 }
 
 const callBeautifulMethod = (error, recursiveBeautiful) => {
@@ -29,14 +30,9 @@ const callBeautifulMethod = (error, recursiveBeautiful) => {
   }
 }
 
-const safeString = (value) => {
-  try {
-    return String(value)
-  } catch (error) {
-    return String(error)
-  }
-}
-
+// `error.beautiful()` could throw a new error each time it is called, creating
+// an infinite recursion.
+// So we prevent `.beautiful()` to be called recursively here.
 const serializeError = (error, recursiveBeautiful) => {
   if (!isErrorInstance(error)) {
     return recursiveBeautiful(error)
@@ -52,3 +48,11 @@ const serializeError = (error, recursiveBeautiful) => {
 }
 
 const CUSTOM_MAP = new WeakSet()
+
+const safeString = (value) => {
+  try {
+    return String(value)
+  } catch (error) {
+    return String(error)
+  }
+}
