@@ -64,7 +64,7 @@ const serializeOneError = (
 
 // If `stack: false`, we do not print the error `stack` nor inline preview,
 // which is useful for well-known errors such as input validation.
-const serializeError = (error, { stack, props, useColors }) => {
+const serializeError = ({ error, stack, props, useColors }) => {
   const errorA = omitProps(error, props)
   omitStack(errorA, stack)
   const errorString = inspect(errorA, {
