@@ -22,3 +22,14 @@ test('Can define error.beautiful that is not a function', (t) => {
   const message = beautifulError(error)
   t.true(message.includes(`${figures.cross} Error: test`))
 })
+
+test('error.beautiful() invalid return value is handled', (t) => {
+  const error = new Error('test')
+  error.beautiful = () => {}
+  const message = beautifulError(error)
+  t.true(
+    message.includes(
+      `${figures.cross} TypeError: 'error.beautiful()' must return a string, not: undefined`,
+    ),
+  )
+})
