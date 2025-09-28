@@ -6,10 +6,14 @@ import { applyHeader } from './header.js'
 import { addIcon } from './icon.js'
 
 // Apply the `colors` option to make the error prettier
-export const prettifyError = (
-  { error, errorString, depth },
-  { theme, useColors, icon },
-) => {
+export const prettifyError = ({
+  error,
+  errorString,
+  depth,
+  theme,
+  useColors,
+  icon,
+}) => {
   const lines = errorString.split('\n')
   const linesA = prettifyLines({ error, lines, theme, useColors, icon })
   return linesA.map((line) => indentChildLine(line, depth)).join('\n')

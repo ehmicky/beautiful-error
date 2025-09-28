@@ -4,6 +4,7 @@ import normalizeException from 'normalize-exception'
 
 import { pickChildErrors, restoreChildErrors } from './child.js'
 import { getTheme } from './colors.js'
+import { pickClassOpts } from './options/classes.js'
 import { getOpts } from './options/main.js'
 import { prettifyError } from './pretty.js'
 import { omitProps } from './props.js'
@@ -19,39 +20,46 @@ export { validateOptions } from './options/validate.js'
 // Prettify error's message and stack
 const beautifulError = (error, opts) => {
   const errorA = normalizeException(error)
-  const {
-    error: errorB,
-    opts: { stack, cause, props, colors, icon, header },
-  } = getOpts(errorA, opts)
-  const { theme, useColors } = getTheme(colors, header)
-  return serializeFullError(errorB, 0, {
-    stack,
-    cause,
-    props,
-    theme,
-    useColors,
-    icon,
-  })
+  const { error: errorB, classes } = getOpts(errorA, opts)
+  return serializeFullError(errorB, 0, classes)
 }
 
-const serializeFullError = (error, depth, opts) => {
+const serializeFullError = (error, depth, classes) => {
+  const classOpts = pickClassOpts(classes, error)
   const { cause, errors } = pickChildErrors(error)
-  const childErrorStrings = getChildErrorStrings({ cause, errors, opts, depth })
-  const errorString = serializeOneError(error, depth, opts)
+  const childErrorStrings = getChildErrorStrings({
+    cause,
+    errors,
+    classes,
+    classOpts,
+    depth,
+  })
+  const errorString = serializeOneError(error, depth, classOpts)
   restoreChildErrors(error, cause, errors)
   return [errorString, ...childErrorStrings].join('\n\n')
 }
 
-const getChildErrorStrings = ({ cause, errors = [], opts, depth }) =>
-  opts.cause
+const getChildErrorStrings = ({
+  cause,
+  errors = [],
+  classes,
+  classOpts,
+  depth,
+}) =>
+  classOpts.cause
     ? [cause, ...errors]
         .filter(Boolean)
-        .map((error) => serializeFullError(error, depth + 1, opts))
+        .map((error) => serializeFullError(error, depth + 1, classes))
     : []
 
-const serializeOneError = (error, depth, opts) => {
-  const errorString = serializeError(error, opts)
-  return prettifyError({ error, errorString, depth }, opts)
+const serializeOneError = (
+  error,
+  depth,
+  { colors, header, stack, props, icon },
+) => {
+  const { theme, useColors } = getTheme(colors, header)
+  const errorString = serializeError({ error, stack, props, useColors })
+  return prettifyError({ error, errorString, depth, theme, useColors, icon })
 }
 
 // If `stack: false`, we do not print the error `stack` nor inline preview,

@@ -21,3 +21,6 @@ export const validateObject = (value, optName) => {
     throw new Error(`${optName} must be a plain object, not: ${value}`)
   }
 }
+
+export const pickClassOpts = (classes, error) =>
+  classes[error.name] ?? classes.default

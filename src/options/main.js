@@ -6,12 +6,12 @@ import { normalizeOptions } from './validate.js'
 // Normalize and validate options
 export const getOpts = (error, opts) => {
   try {
-    return { error, opts: normalizeOptions(opts) }
+    return { error, classes: normalizeOptions(opts) }
   } catch (error_) {
     // eslint-disable-next-line fp/no-mutation
     error_.message = `${PACKAGE_NAME} invalid usage: ${error_.message}`
     const errorA = normalizeException(error_)
-    return { error: errorA, opts: INVALID_OPTS }
+    return { error: errorA, classes: { default: INVALID_OPTS } }
   }
 }
 
