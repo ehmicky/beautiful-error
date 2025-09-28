@@ -1,5 +1,6 @@
 import isErrorInstance from 'is-error-instance'
 
+// `error.beautiful()` can be define to customize behavior
 export const callCustom = (error, recursiveBeautiful) => {
   if (typeof error.beautiful !== 'function' || CUSTOM_MAP.has(error)) {
     return
@@ -53,6 +54,6 @@ const safeString = (value) => {
   try {
     return String(value)
   } catch (error) {
-    return String(error)
+    return safeString(error)
   }
 }
