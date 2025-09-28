@@ -71,3 +71,16 @@ test('error.beautiful() non-error exception is handled', (t) => {
   const message = beautifulError(error)
   t.true(message.includes(`${figures.cross} Error: undefined`))
 })
+
+test('error.beautiful() exception does not infinitely recurse', (t) => {
+  // eslint-disable-next-line fp/no-class
+  class RecursiveError extends Error {
+    // eslint-disable-next-line class-methods-use-this
+    beautiful() {
+      throw new RecursiveError('inner')
+    }
+  }
+
+  const message = beautifulError(new RecursiveError('test'))
+  t.true(message.includes(`${figures.cross} RecursiveError: inner`))
+})
