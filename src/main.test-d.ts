@@ -58,6 +58,14 @@ expectNotAssignable<Options>({ header: true })
 beautifulError('', { header: 'unknown' })
 expectNotAssignable<Options>({ header: 'unknown' })
 
+beautifulError('', { custom: 'pretty' })
+expectAssignable<Options>({ custom: 'pretty' })
+beautifulError('', { custom: Symbol('pretty') })
+expectAssignable<Options>({ custom: Symbol('pretty') })
+// @ts-expect-error
+beautifulError('', { custom: true })
+expectNotAssignable<Options>({ custom: true })
+
 beautifulError('', { classes: {} })
 expectAssignable<Options>({ classes: {} })
 // @ts-expect-error
