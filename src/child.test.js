@@ -82,3 +82,17 @@ test('Child errors are prettified', (t) => {
   const message = beautifulError(causeError)
   t.true(message.includes(`${figures.cross} RangeError: .cause`))
 })
+
+test('Cause is omitted if the "cause" option is false', (t) => {
+  const message = beautifulError(causeError, { cause: false })
+  t.true(message.includes('TypeError: test'))
+  t.false(message.includes('RangeError: .cause'))
+  t.false(message.includes('[cause]'))
+})
+
+test('Aggregate errors are omitted if the "cause" option is false', (t) => {
+  const message = beautifulError(aggregateError, { cause: false })
+  t.true(message.includes('AggregateError: test'))
+  t.false(message.includes('TypeError: .errors'))
+  t.false(message.includes('[errors]'))
+})
