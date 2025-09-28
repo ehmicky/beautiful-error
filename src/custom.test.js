@@ -33,3 +33,18 @@ test('error.beautiful() invalid return value is handled', (t) => {
     ),
   )
 })
+
+test('error.beautiful() non-serializable return value is handled', (t) => {
+  const error = new Error('test')
+  error.beautiful = () => ({
+    toString() {
+      throw new TypeError('inner')
+    },
+  })
+  const message = beautifulError(error)
+  t.true(
+    message.includes(
+      `${figures.cross} TypeError: 'error.beautiful()' must return a string, not: TypeError: inner`,
+    ),
+  )
+})
