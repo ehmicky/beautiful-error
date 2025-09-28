@@ -84,3 +84,16 @@ test('error.beautiful() exception does not infinitely recurse', (t) => {
   const message = beautifulError(new RecursiveError('test'))
   t.true(message.includes(`${figures.cross} RecursiveError: inner`))
 })
+
+test('error.beautiful() can call itself', (t) => {
+  // eslint-disable-next-line fp/no-class
+  class RecursiveError extends Error {
+    beautiful() {
+      // eslint-disable-next-line fp/no-this
+      return beautifulError(this, { icon: 'warning' })
+    }
+  }
+
+  const message = beautifulError(new RecursiveError('test'))
+  t.true(message.includes(`${figures.warning} RecursiveError: test`))
+})
