@@ -1,7 +1,7 @@
 import { validateHeader } from '../header.js'
 import { validateIcon } from '../icon.js'
 
-import { applyClassesOpts, validateObject } from './classes.js'
+import { applyClassesOpts, getClassesOpts, validateObject } from './classes.js'
 import { applyDefaultOpts } from './default.js'
 
 // Validate option values.
@@ -11,14 +11,18 @@ export const validateOptions = (opts) => {
 }
 
 export const normalizeOptions = (opts = {}) => {
-  validateObject(opts, 'options')
+  validateObject(opts, 'The options')
+  const { classes, opts: optsA } = getClassesOpts(opts)
   return Object.fromEntries(
-    names.map((name) => [name, normalizeClassOptions(name, classes, optsA)]),
+    Object.keys(classes).map((name) => [
+      name,
+      normalizeClassOptions(name, classes, optsA),
+    ]),
   )
 }
 
-const normalizeClassOptions = (name, opts) => {
-  const classOpts = applyClassesOpts(name, opts)
+const normalizeClassOptions = (name, classes, opts) => {
+  const classOpts = applyClassesOpts(name, classes, opts)
   Object.entries(classOpts).forEach(validateOpt)
   return applyDefaultOpts(classOpts)
 }
