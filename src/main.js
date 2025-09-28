@@ -2,6 +2,7 @@ import { inspect } from 'node:util'
 
 import normalizeException from 'normalize-exception'
 
+import { pickChildErrors, restoreChildErrors } from './child.js'
 import { getTheme } from './colors.js'
 import { getOpts } from './options/main.js'
 import { prettifyError } from './pretty.js'
@@ -22,21 +23,31 @@ const beautifulError = (error, opts) => {
     error: errorB,
     opts: { stack, props, colors, icon, header },
   } = getOpts(errorA, opts)
-
   const { theme, useColors } = getTheme(colors, header)
-  const errorString = serializeError({ error: errorB, stack, props, useColors })
-  return prettifyError({
-    error: errorB,
-    errorString,
-    theme,
-    useColors,
-    icon,
-  })
+  return serializeFullError(errorB, { stack, props, theme, useColors, icon })
+}
+
+const serializeFullError = (error, opts) => {
+  const { cause, errors } = pickChildErrors(error)
+  const childErrorStrings = getChildErrorStrings({ cause, errors, opts })
+  const errorString = serializeOneError(error, opts)
+  restoreChildErrors(error, cause, errors)
+  return [errorString, ...childErrorStrings].join('\n\n')
+}
+
+const getChildErrorStrings = ({ cause, errors = [], opts }) =>
+  [cause, ...errors]
+    .filter(Boolean)
+    .map((error) => serializeFullError(error, opts))
+
+const serializeOneError = (error, opts) => {
+  const errorString = serializeError(error, opts)
+  return prettifyError(error, errorString, opts)
 }
 
 // If `stack: false`, we do not print the error `stack` nor inline preview,
 // which is useful for well-known errors such as input validation.
-const serializeError = ({ error, stack, props, useColors }) => {
+const serializeError = (error, { stack, props, useColors }) => {
   const errorA = omitProps(error, props)
   omitStack(errorA, stack)
   const errorString = inspect(errorA, {
@@ -48,3 +59,5 @@ const serializeError = ({ error, stack, props, useColors }) => {
 }
 
 export default beautifulError
+
+console.log(beautifulError(new Error('oh')))

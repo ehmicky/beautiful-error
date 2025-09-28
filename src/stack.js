@@ -1,5 +1,7 @@
 import isErrorInstance from 'is-error-instance'
 
+import { setNonEnumProp } from './utils.js'
+
 // If `stack` is `false`, we do not print stack traces.
 // We do it by temporarily removing `error.stack` recursively.
 // We prefer this over using some string replacement logic since this is less
@@ -41,16 +43,6 @@ const restoreStackProp = (object) => {
 }
 
 const STACK_SYM = Symbol('stack')
-
-const setNonEnumProp = (object, propName, value) => {
-  // eslint-disable-next-line fp/no-mutating-methods
-  Object.defineProperty(object, propName, {
-    value,
-    enumerable: false,
-    writable: true,
-    configurable: true,
-  })
-}
 
 // Calls `callFunc(object)` on any object, recursively
 const recurseObject = (value, callFunc) => {

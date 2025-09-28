@@ -1,5 +1,4 @@
 // If `props` is `false`, we do not print error properties.
-//  - Including `cause` and `errors`
 // This requires creating a copy of `error` with only `name`, `message`,
 // `stack` and `__proto__`. This allows using using `util.inspect()` to:
 //  - Keep stack trace colors
