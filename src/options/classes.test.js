@@ -79,3 +79,12 @@ test('Can set classes.default empty', (t) => {
   })
   t.true(message.includes(`${figures.cross} TypeError: test`))
 })
+
+test('Can set classes.* in nested errors', (t) => {
+  const message = beautifulError(
+    new TypeError('test', { cause: new URIError('.cause') }),
+    { classes: { TypeError: { icon: 'warning' }, URIError: { icon: 'info' } } },
+  )
+  t.true(message.includes(`${figures.warning} TypeError: test`))
+  t.true(message.includes(`${figures.info} URIError: .child`))
+})
