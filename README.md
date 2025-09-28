@@ -143,6 +143,28 @@ Specify [different options per error class](#error-class-specific). The object:
   or `"default"` (used if no `error.name` matches)
 - Values are [options](#options) objects
 
+## Custom serialization
+
+Errors can customize how they are serialized by defining an `error.beautiful()`
+function returning a string. This can call `beautifulError()` itself.
+
+For example, to remove secret values:
+
+<!-- eslint-disable fp/no-class, fp/no-this -->
+
+```js
+import beautifulError from 'beautiful-error'
+
+class ExampleError extends Error {
+  beautiful() {
+    return beautifulError(this).replaceAll('secret', '***')
+  }
+}
+
+const error = new ExampleError('Unknown value: secret')
+const message = beautifulError(error) // 'Unknown value: ***'
+```
+
 # Related projects
 
 - [`modern-errors`](https://github.com/ehmicky/modern-errors): Handle errors in
