@@ -62,6 +62,28 @@ export interface Options {
    * @default 'red bold'
    */
   readonly header?: Styles | ''
+
+  /**
+   * Specify different options per error class. The object:
+   *  - Keys are either the
+   *    [`error.name`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/name),
+   *    or `"default"` (used if no `error.name` matches)
+   *  - Values are options objects
+   *
+   * @default {}
+   *
+   * @example
+   * ```js
+   * const message = beautifulError(error, {
+   *   InputError: { icon: 'warning', stack: false },
+   *   DatabaseError: { icon: 'info', stack: false },
+   *   default: { icon: 'cross' },
+   * })
+   * ```
+   */
+  readonly classes?: {
+    readonly [errorName: string]: Omit<Options, 'classes'>
+  }
 }
 
 /**
