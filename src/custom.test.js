@@ -59,3 +59,15 @@ test('error.beautiful() exception is handled', (t) => {
   const message = beautifulError(error)
   t.true(message.includes(`${figures.cross} TypeError: inner`))
 })
+
+test('error.beautiful() non-error exception is handled', (t) => {
+  const error = new Error('test')
+
+  error.beautiful = () => {
+    // eslint-disable-next-line no-throw-literal
+    throw undefined
+  }
+
+  const message = beautifulError(error)
+  t.true(message.includes(`${figures.cross} Error: undefined`))
+})
