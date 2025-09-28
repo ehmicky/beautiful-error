@@ -36,7 +36,7 @@ const serializeFullError = (error, depth, classes) => {
   })
   const errorString = serializeOneError(error, depth, classOpts)
   restoreChildErrors(error, cause, errors)
-  return [errorString, ...childErrorStrings].join('\n\n')
+  return [errorString, ...childErrorStrings].join('\n')
 }
 
 const getChildErrorStrings = ({
