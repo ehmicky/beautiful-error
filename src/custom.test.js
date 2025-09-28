@@ -48,3 +48,14 @@ test('error.beautiful() non-serializable return value is handled', (t) => {
     ),
   )
 })
+
+test('error.beautiful() exception is handled', (t) => {
+  const error = new Error('test')
+
+  error.beautiful = () => {
+    throw new TypeError('inner')
+  }
+
+  const message = beautifulError(error)
+  t.true(message.includes(`${figures.cross} TypeError: inner`))
+})
