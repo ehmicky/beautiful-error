@@ -1,6 +1,5 @@
 import { stripVTControlCharacters } from 'node:util'
 
-import { indentChildLine } from './child.js'
 import { colorizeLine } from './colors.js'
 import { applyHeader } from './header.js'
 import { addIcon } from './icon.js'
@@ -9,14 +8,13 @@ import { addIcon } from './icon.js'
 export const prettifyError = ({
   error,
   errorString,
-  depth,
   theme,
   useColors,
   icon,
 }) => {
   const lines = errorString.split('\n')
   const linesA = prettifyLines({ error, lines, theme, useColors, icon })
-  return linesA.map((line) => indentChildLine(line, depth)).join('\n')
+  return linesA.join('\n')
 }
 
 const prettifyLines = ({ error, lines, theme, useColors, icon }) => {

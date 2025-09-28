@@ -2,7 +2,7 @@ import { inspect } from 'node:util'
 
 import normalizeException from 'normalize-exception'
 
-import { pickChildErrors, restoreChildErrors } from './child.js'
+import { indentError, pickChildErrors, restoreChildErrors } from './child.js'
 import { getTheme } from './colors.js'
 import { callCustom } from './custom.js'
 import { pickClassOpts } from './options/classes.js'
@@ -37,9 +37,10 @@ const serializeFullError = ({ error, depth, classes, opts }) => {
     opts,
     depth,
   })
-  const errorString = serializeOneError({ error, depth, classOpts, opts })
+  const errorString = getErrorString(error, opts, classOpts)
+  const mainErrorString = indentError(errorString, depth)
   restoreChildErrors(error, cause, errors)
-  return [errorString, ...childErrorStrings].join('\n')
+  return [mainErrorString, ...childErrorStrings].join('\n')
 }
 
 const getChildErrorStrings = ({
@@ -58,12 +59,11 @@ const getChildErrorStrings = ({
         )
     : []
 
-const serializeOneError = ({
+const getErrorString = (
   error,
-  depth,
-  classOpts: { colors, header, stack, props, icon },
   opts,
-}) => {
+  { colors, header, stack, props, icon },
+) => {
   const customReturn = callCustom(error, (cause) => beautifulError(cause, opts))
 
   if (typeof customReturn === 'string') {
@@ -72,7 +72,7 @@ const serializeOneError = ({
 
   const { theme, useColors } = getTheme(colors, header)
   const errorString = serializeError({ error, stack, props, useColors })
-  return prettifyError({ error, errorString, depth, theme, useColors, icon })
+  return prettifyError({ error, errorString, theme, useColors, icon })
 }
 
 // If `stack: false`, we do not print the error `stack` nor inline preview,

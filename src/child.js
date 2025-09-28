@@ -22,7 +22,13 @@ export const restoreChildErrors = (error, cause, errors) => {
   }
 }
 
-export const indentChildLine = (line, depth) =>
+export const indentError = (errorString, depth) =>
+  errorString
+    .split('\n')
+    .map((line) => indentChildLine(line, depth))
+    .join('\n')
+
+const indentChildLine = (line, depth) =>
   depth === 0 ? line : `${' '.repeat(depth * INDENT_SIZE)}${line}`
 
 const INDENT_SIZE = 4
