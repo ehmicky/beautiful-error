@@ -1,14 +1,12 @@
 import normalizeException from 'normalize-exception'
 
-import { applyDefaultOpts, DEFAULT_OPTS } from './default.js'
-import { validateOptions } from './validate.js'
+import { DEFAULT_OPTS } from './default.js'
+import { normalizeOptions } from './validate.js'
 
 // Normalize and validate options
 export const getOpts = (error, opts) => {
   try {
-    validateOptions(opts)
-    const optsA = applyDefaultOpts(opts)
-    return { error, opts: optsA }
+    return { error, opts: normalizeOptions(opts) }
   } catch (error_) {
     // eslint-disable-next-line fp/no-mutation
     error_.message = `${PACKAGE_NAME} invalid usage: ${error_.message}`

@@ -1,20 +1,26 @@
-import isPlainObj from 'is-plain-obj'
-
 import { validateHeader } from '../header.js'
 import { validateIcon } from '../icon.js'
+
+import { applyClassesOpts, validateObject } from './classes.js'
+import { applyDefaultOpts } from './default.js'
 
 // Validate option values.
 // This is exported, although not documented.
 export const validateOptions = (opts) => {
-  if (opts === undefined) {
-    return
-  }
+  normalizeOptions(opts)
+}
 
-  if (!isPlainObj(opts)) {
-    throw new Error(`options must be a plain object: ${opts}`)
-  }
+export const normalizeOptions = (opts = {}) => {
+  validateObject(opts, 'options')
+  return Object.fromEntries(
+    names.map((name) => [name, normalizeClassOptions(name, classes, optsA)]),
+  )
+}
 
-  Object.entries(opts).forEach(validateOpt)
+const normalizeClassOptions = (name, opts) => {
+  const classOpts = applyClassesOpts(name, opts)
+  Object.entries(classOpts).forEach(validateOpt)
+  return applyDefaultOpts(classOpts)
 }
 
 const validateOpt = ([optName, optValue]) => {

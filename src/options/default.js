@@ -16,6 +16,6 @@ export const DEFAULT_OPTS = {
 }
 
 // Remove `undefined` values of an object
-const removeUndefined = (object) => excludeKeys(object, isUndefined)
+export const removeUndefined = (object) => excludeKeys(object, isUndefined)
 
 const isUndefined = (key, value) => value === undefined
