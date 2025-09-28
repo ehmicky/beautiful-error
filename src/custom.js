@@ -1,29 +1,33 @@
 import isErrorInstance from 'is-error-instance'
 
 // `error.beautiful()` can be define to customize behavior
-export const callCustom = (error, recursiveBeautiful) => {
+export const callCustom = (error, errorString, recursiveBeautiful) => {
   if (typeof error.beautiful !== 'function' || CUSTOM_MAP.has(error)) {
-    return
+    return errorString
   }
 
-  const errorString = callBeautifulMethod(error, recursiveBeautiful)
+  const newErrorString = callBeautifulMethod(
+    error,
+    errorString,
+    recursiveBeautiful,
+  )
 
-  if (typeof errorString !== 'string') {
+  if (typeof newErrorString !== 'string') {
     return recursiveBeautiful(
       new TypeError(
-        `'error.beautiful()' must return a string, not: ${safeString(errorString)}`,
+        `'error.beautiful()' must return a string, not: ${safeString(newErrorString)}`,
       ),
     )
   }
 
-  return errorString
+  return newErrorString
 }
 
-const callBeautifulMethod = (error, recursiveBeautiful) => {
+const callBeautifulMethod = (error, errorString, recursiveBeautiful) => {
   CUSTOM_MAP.add(error)
 
   try {
-    return error.beautiful()
+    return error.beautiful(errorString)
   } catch (cause) {
     return serializeError(cause, recursiveBeautiful)
   } finally {

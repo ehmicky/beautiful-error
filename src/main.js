@@ -64,15 +64,18 @@ const getErrorString = (
   opts,
   { colors, header, stack, props, icon },
 ) => {
-  const customReturn = callCustom(error, (cause) => beautifulError(cause, opts))
-
-  if (typeof customReturn === 'string') {
-    return customReturn
-  }
-
   const { theme, useColors } = getTheme(colors, header)
   const errorString = serializeError({ error, stack, props, useColors })
-  return prettifyError({ error, errorString, theme, useColors, icon })
+  const newErrorString = prettifyError({
+    error,
+    errorString,
+    theme,
+    useColors,
+    icon,
+  })
+  return callCustom(error, newErrorString, (cause) =>
+    beautifulError(cause, opts),
+  )
 }
 
 // If `stack: false`, we do not print the error `stack` nor inline preview,
