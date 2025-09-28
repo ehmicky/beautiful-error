@@ -39,6 +39,7 @@ const validateBooleanOpt = (value, optName) => {
 
 const VALIDATORS = {
   stack: validateBooleanOpt,
+  cause: validateBooleanOpt,
   props: validateBooleanOpt,
   colors: validateBooleanOpt,
   icon: validateIcon,

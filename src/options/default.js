@@ -9,6 +9,7 @@ export const applyDefaultOpts = (opts = {}) => ({
 // Default values of options
 export const DEFAULT_OPTS = {
   stack: true,
+  cause: true,
   props: true,
   icon: 'cross',
   header: 'red bold',

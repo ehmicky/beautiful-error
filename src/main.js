@@ -21,10 +21,17 @@ const beautifulError = (error, opts) => {
   const errorA = normalizeException(error)
   const {
     error: errorB,
-    opts: { stack, props, colors, icon, header },
+    opts: { stack, cause, props, colors, icon, header },
   } = getOpts(errorA, opts)
   const { theme, useColors } = getTheme(colors, header)
-  return serializeFullError(errorB, 0, { stack, props, theme, useColors, icon })
+  return serializeFullError(errorB, 0, {
+    stack,
+    cause,
+    props,
+    theme,
+    useColors,
+    icon,
+  })
 }
 
 const serializeFullError = (error, depth, opts) => {
@@ -36,9 +43,11 @@ const serializeFullError = (error, depth, opts) => {
 }
 
 const getChildErrorStrings = ({ cause, errors = [], opts, depth }) =>
-  [cause, ...errors]
-    .filter(Boolean)
-    .map((error) => serializeFullError(error, depth + 1, opts))
+  opts.cause
+    ? [cause, ...errors]
+        .filter(Boolean)
+        .map((error) => serializeFullError(error, depth + 1, opts))
+    : []
 
 const serializeOneError = (error, depth, opts) => {
   const errorString = serializeError(error, opts)
