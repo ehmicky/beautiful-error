@@ -58,6 +58,34 @@ expectNotAssignable<Options>({ header: true })
 beautifulError('', { header: 'unknown' })
 expectNotAssignable<Options>({ header: 'unknown' })
 
+beautifulError('', { classes: {} })
+expectAssignable<Options>({ classes: {} })
+// @ts-expect-error
+beautifulError('', { classes: true })
+expectNotAssignable<Options>({ classes: true })
+
+beautifulError('', { classes: { Error: {} } })
+expectAssignable<Options>({ classes: { Error: {} } })
+beautifulError('', { classes: { TypeError: {} } })
+expectAssignable<Options>({ classes: { TypeError: {} } })
+beautifulError('', { classes: { default: {} } })
+expectAssignable<Options>({ classes: { default: {} } })
+beautifulError('', { classes: { error: {} } })
+expectAssignable<Options>({ classes: { error: {} } })
+beautifulError('', { classes: { other: {} } })
+expectAssignable<Options>({ classes: { other: {} } })
+
+beautifulError('', { classes: { default: { stack: false } } })
+expectAssignable<Options>({ classes: { default: { stack: false } } })
+// @ts-expect-error
+beautifulError('', { classes: { default: { classes: {} } } })
+expectNotAssignable<Options>({ classes: { default: { classes: {} } } })
+expectNotAssignable<Options>({ classes: { default: undefined } })
+expectNotAssignable<Options>({ classes: { Error: undefined } })
+// @ts-expect-error
+beautifulError('', { classes: { default: { stack: 0 } } })
+expectNotAssignable<Options>({ classes: { default: { stack: 0 } } })
+
 expectType<void>(validateOptions({}))
 validateOptions(0)
 // @ts-expect-error
