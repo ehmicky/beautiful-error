@@ -97,3 +97,11 @@ test('error.beautiful() can call itself', (t) => {
   const message = beautifulError(new RecursiveError('test'))
   t.true(message.includes(`${figures.warning} RecursiveError: test`))
 })
+
+test('error.beautiful() works recursively', (t) => {
+  const message = beautifulError(
+    new Error('test', { cause: new TestError('inner') }),
+  )
+  t.true(message.includes(`${figures.cross} Error: test`))
+  t.true(message.includes(`\n    ${figures.cross} TESTERROR: INNER`))
+})
